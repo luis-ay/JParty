@@ -5,7 +5,6 @@ import { enableScreens } from 'react-native-screens';
 import MainMenu from './pages/main_menu/MainMenu';
 import HowToPlay from './pages/how_to/HowToPlay';
 import Settings from './pages/settings/Settings';
-import { useDispatch } from 'react-redux/es/exports'
 
 
 
@@ -13,7 +12,8 @@ enableScreens()
 const Stack = createNativeStackNavigator()
 
 const Core = () => {
-    const dispatch = useDispatch()
+
+
 
   return (
     <NavigationContainer>

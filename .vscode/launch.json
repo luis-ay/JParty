@@ -1,0 +1,21 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [
+        {"name":"Debug Exponent Hermes - Experimental","request":"launch","type":"reactnativedirect","cwd":"${workspaceFolder}","platform":"exponent","expoHostType":"lan"},
+        {
+            "name": "Debug in Exponent",
+            "cwd": "${workspaceFolder}",
+            "type": "reactnative",
+            "request": "launch",
+            "platform": "exponent"
+        },
+        {
+            "name": "Debug in Hermes Exponent - Experimental",
+            "cwd": "${workspaceFolder}",
+            "type": "reactnativedirect",
+            "request": "launch",
+            "platform": "exponent"
+        }
+    ]
+}

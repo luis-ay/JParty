@@ -6,8 +6,8 @@ const initialState = {
     rebuzz: true,
     deductions: false,
     scores: {},
-    finalJParty: {},
-
+    finalJParty:  {},
+    matchHistory: []
 }
 
 
@@ -17,37 +17,37 @@ const gameSlice = createSlice({
   reducers: {
     addContestant: (state, action) => {
         const newContestant = action.payload //payload must be some identifer we get from the swift code (could be a list where we just add all contestants)
-        state.game.contestants.append(newContestant)
+        state.contestants.append(newContestant)
     },
-    makeHost: (state) => {
-        state.host = true
+    makeHost: (state, action) => {
+        const hosting = action.payload //true or false
+        state.host = hosting
     },
     addScore: (state, action) => {
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and amount to add
         const amount = action.payload.amount 
-        state.game.scores[contestant] += amount
+        state.scores[contestant] += amount
     },
     subScore: (state, action) => {
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and amount to add
         const amount = action.payload.amount 
-        state.game.scores[contestant] -= amount
+        state.scores[contestant] -= amount
     },
     addFinalAnswer: (state, action) => {
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and answer to final jparty
         const answer = action.payload.answer
-        state.game.finalJParty[contestant] = answer
+        state.finalJParty[contestant] = answer
     },
     changeGameMode: (state, action) => {
-        const rebuzzSetting = action.payload.rebuzz //only need rebuzzSetting bc only one (rebuzz/pass) can be true at a given time
-        state.game.rebuzz = rebuzzSetting
+        const rebuzzSetting = action.payload //only need rebuzzSetting bc only one (rebuzz/pass) can be true at a given time
+        state.rebuzz = rebuzzSetting
     },
     changeDeductions: (state, action) => {
-        const deductionsSetting = action.payload.deductions //payload is true/false for allow deductions
-        state.game.deductions = deductionsSetting
+        const deductionsSetting = action.payload //payload is true/false for allow deductions
+        state.deductions = deductionsSetting
     },
 
   },
-  extraReducers() {}
 });
 
 
@@ -57,7 +57,8 @@ const gameSlice = createSlice({
 export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer } = gameSlice.actions;
 export const selectAllScores = (state) => state.scores;
 export const selectFinalAnswers = (state) => state.finalJParty;
-export const selectGameMode = (state) => state.rebuzz;
-export const selectDeductions = (state) => state.deductions;
+export const selectGameMode = (state) => state.game.rebuzz;
+export const selectDeductions = (state) => state.game.deductions;
+export const selectMatchHistory = (state) => state.matchHistory
 
 export default gameSlice.reducer;

@@ -1,17 +1,32 @@
 import { StyleSheet, Text, View, SafeAreaView, Switch, Pressable } from 'react-native'
-import React,{useState} from 'react'
-
+import React,{useEffect, useState} from 'react'
+import { changeGameMode, changeDeductions, selectGameMode, selectDeductions } from '../../features/gameSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
 
 
 const Settings = ({navigation}) => {
-  const [rebuzz, setReBuzz] = useState(true)
-  const [quickPass, setQuickPass] = useState(false)
-  const [deductions, setDeductions] = useState(true)
+  // Need to set component state to whats persisted in the store, need to use selectors
 
-  const toggleSwitch = () => {
+  const dispatch = useDispatch()
+  const storeRebuzz = useSelector(selectGameMode)
+  const storeDeductions = useSelector(selectDeductions)
+
+  const [rebuzz, setReBuzz] = useState(storeRebuzz)
+  const [quickPass, setQuickPass] = useState(!storeRebuzz)
+  const [deductions, setDeductions] = useState(storeDeductions)
+
+
+  const toggleMode = () => {
+    dispatch(changeGameMode(!rebuzz))
     setReBuzz(!rebuzz)
     setQuickPass(!rebuzz ? false : true)
   }
+  const toggleDeductions = () => {
+    dispatch(changeDeductions(!deductions))
+    setDeductions(!deductions)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.logo}>SETTINGS<Text style={styles.logoColor}>!</Text></Text>
@@ -20,7 +35,7 @@ const Settings = ({navigation}) => {
         <Switch
           trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
           thumbColor={'#FFF'}
-          onValueChange={toggleSwitch}
+          onValueChange={toggleMode}
           value={rebuzz}
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
@@ -30,7 +45,7 @@ const Settings = ({navigation}) => {
         <Switch
           trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
           thumbColor={'#FFF'}
-          onValueChange={toggleSwitch}
+          onValueChange={toggleMode}
           value={quickPass}
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
@@ -40,7 +55,7 @@ const Settings = ({navigation}) => {
         <Switch
           trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
           thumbColor={'#FFF'}
-          onValueChange={()=>setDeductions(!deductions)}
+          onValueChange={toggleDeductions}
           value={deductions}
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />

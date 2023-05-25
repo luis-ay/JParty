@@ -1,14 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit'
-
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { persistReducer } from 'redux-persist'
 import gameReducer from './features/gameSlice'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+  blacklist: ['navigation']
+}
 
-// Automatically adds the thunk middleware and the Redux DevTools extension
+const persistedReducer = persistReducer(persistConfig, gameReducer)
 const store = configureStore({
   // Automatically calls `combineReducers`
-  reducer: {
-    game: gameReducer,
-  }
+  reducer: {game: persistedReducer,
+  },
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoreActions: ['persist/PERSIST']
+    }
+  })
 })
 
 export default store
