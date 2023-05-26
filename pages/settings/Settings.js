@@ -41,7 +41,9 @@ const Settings = ({navigation}) => {
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
+
       <View style={styles.underline}></View>
+
 
       <View style={styles.optionContainer}>
         <Text style={styles.optionTitle}>QUICK<Text style={styles.logoColor}>!</Text>SHIFT</Text>
@@ -53,6 +55,9 @@ const Settings = ({navigation}) => {
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
+
+      <View style={styles.underline}></View>
+
       <View style={styles.optionContainer}>
         <Text style={styles.optionTitle}>DEDUCTIONS<Text style={styles.logoColor}>!</Text></Text>
         <Switch
@@ -63,9 +68,14 @@ const Settings = ({navigation}) => {
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
+
+      <View style={styles.underline}></View>
+
       <Pressable onPress={() => navigation.navigate('Main')}>
         <Text style={{fontSize:36, color:'white'}}>Back</Text>
       </Pressable>
+
+
     </SafeAreaView>
   )
 }
@@ -74,7 +84,7 @@ export default Settings
 
 const styles = StyleSheet.create({
   logo:{
-    fontSize:36,
+    fontSize:60,
     color:'white',
     marginVertical:'10%',
     fontWeight:'700'
@@ -107,10 +117,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   underline: {
-    width: '50%',
+    width: '87%',
+    bottom:'7.5%',
     height: 1,
     borderBottomWidth: 2,
     borderBottomColor: '#6A41FF',
   }
-  
+
 })
