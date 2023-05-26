@@ -61,7 +61,7 @@ export default MainMenu
 
 const styles = StyleSheet.create({
   logo:{
-    fontSize:36,
+    fontSize:60,
     color:'white',
     marginVertical:'10%',
     fontWeight:'700',
@@ -72,31 +72,26 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexWrap: 'wrap',
     backgroundColor: '#16182A',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    maxHeight:'100%'
+    justifyContent: 'space-evenly',
+    maxHeight:'100%',
   },
   menuButtonText: {
-    width: 105,
-    height: 34,
+    width: '100%',
+    height: '100%',
+    textAlign: 'center',
     letterSpacing: 1.96,
     fontSize: 14,
     fontWeight: 400,
-    textAlign: 'center',
-    textAlignVertical: 'bottom',
     color: '#ffffff',
   },
-  menuButtonOutline: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 200,
-    height: 50,
+  menuButtonOutline: {  
+    width: '70%',
+    height: '8.1%',/*padding encroached upon height so made 8.1 to fit Gs*/
     borderWidth:4,
     borderColor:'#6A41FF',
-    padding:10,
-    alignItems:'center'
+    padding:'5%',/*button inside padding*/
   },
   review: {
     color: '#aeb1c2'
