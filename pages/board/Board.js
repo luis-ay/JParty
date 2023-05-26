@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable, ScrollView } from 'react-native'
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { selectAllScores, selectDeductions, selectGameMode } from '../../features/gameSlice'
 import Category from './Category'
+import { useIsFocused } from '@react-navigation/native'
 
 const Board = ({navigation}) => {
 
@@ -16,6 +17,15 @@ const Board = ({navigation}) => {
     const [deductions, setDeductions] = useState(storedDeductions)
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
+
+
+    const isFocused = useIsFocused()
+
+    useEffect(()=> {
+        if (isFocused) {
+            setScores(storedScores)
+        }
+    },[isFocused])
 
     const handleDoublePress = () => {
         if (double) {
