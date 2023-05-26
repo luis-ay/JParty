@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native'
 import React from 'react'
 import { addContestant, makeHost } from '../../features/gameSlice'
 import { useDispatch } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -19,10 +20,11 @@ const MainMenu = ({navigation}) => {
   const handleJoinPress=()=> {
     dispatch(makeHost(false))
     navigation.navigate('HowTo')
+    AsyncStorage.clear()
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.logo}>J<Text style={styles.logoColor}>!</Text>PARTY</Text>
       <Pressable style={styles.menuButtonOutline} onPress = {()=> navigation.navigate('HowTo')}>
         <Text style={styles.menuButtonText}>
@@ -50,7 +52,7 @@ const MainMenu = ({navigation}) => {
         </Text>
       </Pressable>
       <Text style={styles.review}>If you liked our app, please consider leaving a review</Text>
-    </SafeAreaView>
+    </View>
       
   )
 }

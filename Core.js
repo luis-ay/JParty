@@ -6,6 +6,7 @@ import MainMenu from './pages/main_menu/MainMenu';
 import HowToPlay from './pages/how_to/HowToPlay';
 import Settings from './pages/settings/Settings';
 import Board from './pages/board/Board';
+import HostPanel from './pages/board/HostPanel';
 
 
 
@@ -25,7 +26,8 @@ const Core = () => {
           <Stack.Screen name ='HowTo' component={HowToPlay} />
           <Stack.Screen name ='Settings' component={Settings} />
           <Stack.Screen name ='Board' component={Board} />
-
+          <Stack.Screen name ='HostPanel' component={HostPanel} />
+          
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>
       </NavigationContainer>

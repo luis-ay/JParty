@@ -17,14 +17,32 @@ const Board = ({navigation}) => {
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
 
+    const handleDoublePress = () => {
+        if (double) {
+            setDouble(false)
+            setValues([200,400,600,800,1000])
+        }
+        else {
+            setDouble(true)
+            setValues([400,800,1200,1600,2000])
+        }
+    }
+
   return (
-    <View style={styles.container}>
-        <Pressable onPress={() => navigation.navigate('Main')}>
-            <Text style={{fontSize:36, color:'white', marginTop:80}}>Back</Text>
-        </Pressable>
-        <ScrollView contentContainerStyle={styles.scrollcontainer} style={styles.scroll}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer}>
+            <Text style={styles.logo}>J<Text style={styles.logoColor}>!</Text>PARTY</Text>
+            <Pressable onPress={() => navigation.navigate('Main')}>
+                <Text style={{fontSize:36, color:'white'}}>Back</Text>
+            </Pressable>
+
+            <View>
+                <Pressable onPress={handleDoublePress}>
+                    <Text  style={{fontSize:36, color:'white'}}>{double ?'Single J!Party' : 'Double J!Party'}</Text>
+                </Pressable>
+            </View>
+
             <View style={styles.categoriesContainer}>
-                {values.map(val => <Category value={val} answerCount={0}/>)}
+                {values.map(val => <Category key={val} value={val} answerCount={0} navigation={navigation}/>)}
             </View>
 
             <View style={styles.scoresContainer}>
@@ -32,7 +50,6 @@ const Board = ({navigation}) => {
                 {Object.entries(scores).map(entry => <Text style={styles.scoreText} key={entry[0]}>{entry[0]}: {entry[1]} </Text>)}
             </View>
         </ScrollView>
-    </View>
   )
 }
 
@@ -44,18 +61,22 @@ export const responsiveSize = () => {
   }
 
 const styles = StyleSheet.create({
+    logo:{
+        fontSize:36,
+        color:'white',
+        marginVertical:'10%',
+        fontWeight:'700',
+        },
+        logoColor: {
+        color: '#6A41FF',
+        textDecorationLine: 'none',
+    },
     container: {
         backgroundColor: '#16182A',
-        alignItems: 'center',
     },
     scrollcontainer: {
-        backgroundColor: '#16182A',
-        flex:1,
-        marginVertical:10,
-    },
-    scroll: {
-        height: '100%',
-        width: '90%',
+        marginTop:100,
+        paddingBottom: 150 ///This is very important for scrolling to the bottom, adjust as needed
     },
     categoriesContainer: {
         width: '100%',

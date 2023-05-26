@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
     host: false,
-    contestants:['Timmy','Luis', 'Bob'],
     rebuzz: true,
     deductions: false,
     scores: {'Timmy':500, 'Luis':300, 'Bob':400},
     finalJParty:  {},
-    matchHistory: []
+    contestants:[],
+    matchHistory: [],
 }
 
 
@@ -17,8 +17,11 @@ const gameSlice = createSlice({
   reducers: {
     addContestant: (state, action) => {
         const newContestant = action.payload //payload must be some identifer we get from the swift code (could be a list where we just add all contestants)
-        state.contestants.push(newContestant)
-        state.scores[newContestant] = 0
+        const contestants = state.contestants
+        if (!contestants.includes(newContestant)) {
+            state.contestants = [...contestants, newContestant]
+            state.scores[newContestant] = 0
+        }
     },
     makeHost: (state, action) => {
         const hosting = action.payload //true or false
@@ -33,6 +36,7 @@ const gameSlice = createSlice({
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and amount to add
         const amount = action.payload.amount 
         state.scores[contestant] -= amount
+
     },
     addFinalAnswer: (state, action) => {
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and answer to final jparty

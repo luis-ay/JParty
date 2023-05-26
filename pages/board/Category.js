@@ -1,11 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, Pressable} from 'react-native'
 import React from 'react'
 
-const Category = ({value, answerCount}) => {
+const Category = ({value, answerCount, navigation}) => {
+
+  const handleClick = () => {
+    console.log(value)
+    navigation.navigate('HostPanel', {value: value})
+  }
+
   return (
-    <View style={answerCount>=5 ? styles.inactive : styles.active}>
+    <Pressable style={answerCount>=5 ? styles.inactive : styles.active} onPress={handleClick}>
       <Text style={answerCount>=5 ? styles.inactiveText : styles.activeText} >{value}</Text>
-    </View>
+    </Pressable>
   )
 }
 

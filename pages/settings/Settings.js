@@ -30,6 +30,7 @@ const Settings = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.logo}>SETTINGS<Text style={styles.logoColor}>!</Text></Text>
+      
       <View style={styles.optionContainer}>
         <Text style={styles.optionTitle}>RE<Text style={styles.logoColor}>!</Text>BUZZ</Text>
         <Switch
@@ -40,6 +41,8 @@ const Settings = ({navigation}) => {
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
+      <View style={styles.underline}></View>
+
       <View style={styles.optionContainer}>
         <Text style={styles.optionTitle}>QUICK<Text style={styles.logoColor}>!</Text>SHIFT</Text>
         <Switch
@@ -103,5 +106,11 @@ const styles = StyleSheet.create({
     maxHeight:'100%',
     justifyContent: 'center'
   },
+  underline: {
+    width: '50%',
+    height: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: '#6A41FF',
+  }
   
 })
