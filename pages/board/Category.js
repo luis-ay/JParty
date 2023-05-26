@@ -1,15 +1,10 @@
 import { StyleSheet, Text, Pressable} from 'react-native'
 import React from 'react'
 
-const Category = ({value, answerCount, navigation}) => {
-
-  const handleClick = () => {
-    console.log(value)
-    navigation.navigate('HostPanel', {value: value})
-  }
+const Category = ({value, answerCount, handleClick}) => {
 
   return (
-    <Pressable style={answerCount>=5 ? styles.inactive : styles.active} onPress={handleClick}>
+    <Pressable style={answerCount>=5 ? styles.inactive : styles.active} onPress={()=>handleClick(value)}>
       <Text style={answerCount>=5 ? styles.inactiveText : styles.activeText} >{value}</Text>
     </Pressable>
   )
