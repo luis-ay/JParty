@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     host: false,
-    contestants:[],
+    contestants:['Timmy','Luis', 'Bob'],
     rebuzz: true,
     deductions: false,
-    scores: {},
+    scores: {'Timmy':500, 'Luis':300, 'Bob':400},
     finalJParty:  {},
     matchHistory: []
 }
@@ -17,7 +17,8 @@ const gameSlice = createSlice({
   reducers: {
     addContestant: (state, action) => {
         const newContestant = action.payload //payload must be some identifer we get from the swift code (could be a list where we just add all contestants)
-        state.contestants.append(newContestant)
+        state.contestants.push(newContestant)
+        state.scores[newContestant] = 0
     },
     makeHost: (state, action) => {
         const hosting = action.payload //true or false
@@ -55,10 +56,10 @@ const gameSlice = createSlice({
 
 
 export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer } = gameSlice.actions;
-export const selectAllScores = (state) => state.scores;
-export const selectFinalAnswers = (state) => state.finalJParty;
+export const selectAllScores = (state) => state.game.scores;
+export const selectFinalAnswers = (state) => state.game.finalJParty;
 export const selectGameMode = (state) => state.game.rebuzz;
 export const selectDeductions = (state) => state.game.deductions;
-export const selectMatchHistory = (state) => state.matchHistory
+export const selectMatchHistory = (state) => state.game.matchHistory
 
 export default gameSlice.reducer;

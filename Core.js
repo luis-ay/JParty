@@ -5,6 +5,7 @@ import { enableScreens } from 'react-native-screens';
 import MainMenu from './pages/main_menu/MainMenu';
 import HowToPlay from './pages/how_to/HowToPlay';
 import Settings from './pages/settings/Settings';
+import Board from './pages/board/Board';
 
 
 
@@ -23,6 +24,7 @@ const Core = () => {
           <Stack.Screen name='Main' component={MainMenu}/>
           <Stack.Screen name ='HowTo' component={HowToPlay} />
           <Stack.Screen name ='Settings' component={Settings} />
+          <Stack.Screen name ='Board' component={Board} />
 
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>

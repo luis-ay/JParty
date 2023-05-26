@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native'
 import React from 'react'
-import { makeHost } from '../../features/gameSlice'
+import { addContestant, makeHost } from '../../features/gameSlice'
 import { useDispatch } from 'react-redux'
 
 
@@ -10,7 +10,10 @@ const MainMenu = ({navigation}) => {
   const dispatch = useDispatch()
   const handleHostPress =() => {
     dispatch(makeHost(true))
-    navigation.navigate('HowTo')
+    dispatch(addContestant('Tim'))
+    dispatch(addContestant('Luis'))
+    dispatch(addContestant('Bob'))
+    navigation.navigate('Board')
   }
 
   const handleJoinPress=()=> {
