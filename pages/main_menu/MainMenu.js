@@ -3,7 +3,7 @@ import React from 'react'
 import { addContestant, makeHost } from '../../features/gameSlice'
 import { useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import { clearGame } from '../../features/gameSlice'
 
 
 const MainMenu = ({navigation}) => {
@@ -21,6 +21,10 @@ const MainMenu = ({navigation}) => {
     dispatch(makeHost(false))
     navigation.navigate('HowTo')
     AsyncStorage.clear()
+  }
+
+  const handleGameHistory = () => {
+    dispatch(clearGame())
   }
 
   return (
@@ -46,7 +50,7 @@ const MainMenu = ({navigation}) => {
           {`Settings`}
         </Text>
       </Pressable>
-      <Pressable style={styles.menuButtonOutline}>
+      <Pressable style={styles.menuButtonOutline} onPress={handleGameHistory}>
         <Text style={styles.menuButtonText}>
           {`Match History`}
         </Text>

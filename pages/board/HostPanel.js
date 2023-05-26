@@ -5,32 +5,34 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { addScore } from '../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
 
-const HostPanel = ({value, modalRef, close}) => {
-    const [amount, setAmount] = useState(value)
+const HostPanel = ({panelAmountRef, modalRef, close}) => {
+    const [amount, setAmt] = useState(panelAmountRef.current)
     const [dailyDoubleOn, setDailyDouble] = useState(false)
     const rebuzz = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
 
     useEffect(()=> {
-      setAmount(value)
-    },[value])
+      console.log(`amount recieved by panel ${panelAmountRef.current} in useeffect`)
+      setAmt(panelAmountRef.current)
+    },[])
 
     const snapPoints = useMemo(()=> ['10%','25%','50%','75%'],[])
     
       // callbacks
     const handleSheetChanges = useCallback((index) => {
-      console.log('handleSheetChanges', index);
-      close()
+      console.log(`amount recieved by panel ${panelAmountRef.current} during ${index > 0? 'open': 'close'}`)
+      setAmt(panelAmountRef.current)
+      // console.log('handleSheetChanges', index);
     }, []);
 
     const handleDailyDouble= () => {
         if (!dailyDoubleOn) {
-            setAmount(2*value)
+            panelAmountRef.current *= 2
             setDailyDouble(true)
         }
         else {
-            setAmount(value)
+            panelAmountRef.current /= 2
             setDailyDouble(false)
         }
     }
@@ -38,15 +40,17 @@ const HostPanel = ({value, modalRef, close}) => {
     const handleIncorrect = (contestant) => { 
         /////////////////////////////////// LUIS IS HARDCODED FOR NOW ///////////////////////////////////////////////////////////
         // deduct points from contestant score (if deductions are on)
+        
         if (deductions) {
-            dispatch(subScore({contestant:contestant, amount:amount}))
+            console.log(`${contestant} failed and got ${panelAmountRef.current} points taken.`)
+            dispatch(subScore({contestant:contestant, amount:panelAmountRef.current}))
         }
     }
     const handleCorrect = (contestant) => { 
         /////////////////////////////////// LUIS IS HARDCODED FOR NOW ///////////////////////////////////////////////////////////
         //needs to check for rebuzzz
-        console.log('correct you scored')
-        dispatch(addScore({contestant:contestant, amount:amount}))
+        console.log(`${contestant} scored and got ${panelAmountRef.current} points added.`)
+        dispatch(addScore({contestant:contestant, amount:panelAmountRef.current}))
         handleClose()
     }
 
@@ -74,7 +78,7 @@ const HostPanel = ({value, modalRef, close}) => {
               <Text style={{fontSize:36, color:'white'}}>Back</Text>
             </Pressable>
 
-            <Text style={styles.logo}>{amount}</Text>
+            <Text style={styles.logo}>{panelAmountRef.current}</Text>
             <Text style={styles.logo}>BUZZED IN: LUIS</Text>
             
             <View style={{flexDirection: 'row', marginBottom:20}}>
@@ -85,7 +89,7 @@ const HostPanel = ({value, modalRef, close}) => {
                   <Text style={{fontSize:36, color:'red'}} onPress={()=>handleIncorrect('Luis')}>Incorrect</Text>
               </Pressable>
             </View>
-            <Pressable >
+            <Pressable style={dailyDoubleOn? styles.dailyOFFButton : styles.dailyONButton}>
               <Text style={{fontSize:36, color:'orange'}} onPress={handleDailyDouble}>Daily Double</Text>
             </Pressable>
           </View>
@@ -113,4 +117,18 @@ const HostPanel = ({value, modalRef, close}) => {
       color: '#6A41FF',
       textDecorationLine: 'none',
     },
+    dailyONButton: {
+      backgroundColor: '#FFD700',
+      alignItems: 'center',
+      marginVertical: 20,
+      marginHorizontal: '10%',
+      borderRadius: '10%',
+  }, 
+    dailyOFFButton: {
+      backgroundColor: '#2a1a66',
+      alignItems: 'center',
+      marginVertical: 20,
+      marginHorizontal: '10%',
+      borderRadius: '10%'
+  }
   })

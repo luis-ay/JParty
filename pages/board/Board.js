@@ -22,50 +22,65 @@ const Board = ({navigation}) => {
     const [values, setValues] = useState([200,400,600,800,1000])
     const [currAmt, setAmt] = useState(0)
     const [panelOpen, setPanel] = useState(false)
+    const panelAmountRef = useRef(0)
+    
+    const isFocused = useIsFocused() ///sets scores every time we navigate to board screen isFocused -> true, runs useEffect
+    useEffect(()=> {
+        if (isFocused) {
+            setScores(storedScores)
+        }
+      },[isFocused])
 
-    const handleDoublePress = () => {
+
+    const handleDoublePress = () => {  //Sets values for double jeopardy
         if (double) {
+            console.log(`values on categories ${values}`)
             setDouble(false)
             setValues([200,400,600,800,1000])
         }
         else {
+            console.log(`values on categories ${values}`)
             setDouble(true)
             setValues([400,800,1200,1600,2000])
         }
     }
 
-    const bottomSheetModalRef = useRef(null)
 
-    const handlePresentModalPress = (val) => {
-        console.log('clicked')
-        setAmt(val)
-        setPanel(true)
-        bottomSheetModalRef.current?.present();
-      }
+    const bottomSheetModalRef = useRef(null) //used for referencing modal during open/close
 
-      const closePanel = () => {
+    // const handlePresentModalPress = (val) => { //opens modal, sets val which is used as prop for modal
+    //     console.log('opening panel')
+    //     setAmt(val)
+    //     console.log(`Amount being sent to modal: ${currAmt}`)
+    //     setPanel(true)
+    //     bottomSheetModalRef.current?.present();
+    //   }
+
+    const closePanel = () => { //sets scores as signal is sent that modal should close
         console.log('closing panel')
         setScores(storedScores)
         setPanel(false)
-      }
+    }
 
   return (
-        <View>
+        <View style={styles.screen}>
 
-            <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer}>
+            <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer} alwaysBounceVertical={false}>
                 <Text style={styles.logo}>J<Text style={styles.logoColor}>!</Text>PARTY</Text>
                 <Pressable onPress={() => navigation.navigate('Main')}>
                     <Text style={{fontSize:36, color:'white'}}>Back</Text>
                 </Pressable>
 
                 <View>
-                    <Pressable onPress={handleDoublePress}>
+                    <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
                         <Text  style={{fontSize:36, color:'white'}}>{double ?'Single J!Party' : 'Double J!Party'}</Text>
                     </Pressable>
                 </View>
 
                 <View style={styles.categoriesContainer}>
-                    {values.map(val => <Category key={val} value={val} answerCount={0} handleClick={handlePresentModalPress}/>)}
+
+                    {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountRef={panelAmountRef} />)}
+
                 </View>
 
                 <View style={styles.scoresContainer}>
@@ -74,7 +89,7 @@ const Board = ({navigation}) => {
                 </View>
             </ScrollView>
             <BottomSheetModalProvider>
-                    <HostPanel modalRef={bottomSheetModalRef} value={currAmt} close={closePanel}/>
+                    <HostPanel modalRef={bottomSheetModalRef} panelAmountRef={panelAmountRef} close={closePanel}/>
             </BottomSheetModalProvider>
         </View>
   )
@@ -82,10 +97,6 @@ const Board = ({navigation}) => {
 
 export default Board
 
-export const responsiveSize = () => {
-    const currentScreen = Dimensions.get('window')
-    return {'height': currentScreen.height, 'width':currentScreen.width}
-  }
 
 const styles = StyleSheet.create({
     logo:{
@@ -98,16 +109,19 @@ const styles = StyleSheet.create({
         color: '#6A41FF',
         textDecorationLine: 'none',
     },
-    container: {
+    screen: {
         backgroundColor: '#16182A',
     },
+    container: {
+        backgroundColor: '#16182A',
+        marginTop: 60,
+    },
     scrollcontainer: {
-        marginTop:100,
-        paddingBottom: 150 ///This is very important for scrolling to the bottom, adjust as needed
+        paddingBottom: 120 ///This is very important for scrolling to the bottom, adjust as needed
     },
     categoriesContainer: {
         width: '100%',
-        marginBottom: '2%',
+        marginBottom: '5%',
     },
     scoresContainer: {
         marginVertical: '2%',
@@ -115,5 +129,19 @@ const styles = StyleSheet.create({
     scoreText: {
         color:'white',
         fontSize: 32,
+    },
+    doubleJeopardyButton: {
+        backgroundColor: '#FFD700',
+        alignItems: 'center',
+        marginVertical: 20,
+        marginHorizontal: '10%',
+        borderRadius: '10%',
+    }, 
+    singleJeopardyButton: {
+        backgroundColor: '#2a1a66',
+        alignItems: 'center',
+        marginVertical: 20,
+        marginHorizontal: '10%',
+        borderRadius: '10%'
     }
 })

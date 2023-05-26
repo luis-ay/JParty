@@ -51,7 +51,11 @@ const gameSlice = createSlice({
         const deductionsSetting = action.payload //payload is true/false for allow deductions
         state.deductions = deductionsSetting
     },
-
+    clearGame: (state) => {
+        state.contestants = []
+        state.scores = {}
+        state.finalJParty = {}
+    },
   },
 });
 
@@ -59,7 +63,7 @@ const gameSlice = createSlice({
 
 
 
-export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer } = gameSlice.actions;
+export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame } = gameSlice.actions;
 export const selectAllScores = (state) => state.game.scores;
 export const selectFinalAnswers = (state) => state.game.finalJParty;
 export const selectGameMode = (state) => state.game.rebuzz;
