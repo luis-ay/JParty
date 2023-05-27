@@ -5,17 +5,14 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { addScore } from '../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
 
-const HostPanel = ({panelAmountRef, modalRef, close}) => {
-    const [amount, setAmt] = useState(panelAmountRef.current)
+const HostPanel = ({panelAmount, modalRef, close}) => {
+    const [amount, setAmt] = useState(panelAmount)
     const [dailyDoubleOn, setDailyDouble] = useState(false)
     const rebuzz = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
 
-    useEffect(()=> {
-      console.log(`amount recieved by panel ${panelAmountRef.current} in useeffect`)
-      setAmt(panelAmountRef.current)
-    },[])
+   
 
     const snapPoints = useMemo(()=> ['10%','25%','50%','75%'],[])
     
@@ -29,10 +26,12 @@ const HostPanel = ({panelAmountRef, modalRef, close}) => {
     const handleDailyDouble= () => {
         if (!dailyDoubleOn) {
             panelAmountRef.current *= 2
+            setAmt(panelAmountRef.current)
             setDailyDouble(true)
         }
         else {
             panelAmountRef.current /= 2
+            setAmt(panelAmountRef.current)
             setDailyDouble(false)
         }
     }
@@ -51,12 +50,14 @@ const HostPanel = ({panelAmountRef, modalRef, close}) => {
         //needs to check for rebuzzz
         console.log(`${contestant} scored and got ${panelAmountRef.current} points added.`)
         dispatch(addScore({contestant:contestant, amount:panelAmountRef.current}))
-        handleClose()
+        close()
+        setDailyDouble(false)
+        modalRef.current.close()
     }
 
     const handleClose = () => {
-      setDailyDouble(false)
       close()
+      setDailyDouble(false)
       modalRef.current.close()
     }
 
@@ -78,7 +79,7 @@ const HostPanel = ({panelAmountRef, modalRef, close}) => {
               <Text style={{fontSize:36, color:'white'}}>Back</Text>
             </Pressable>
 
-            <Text style={styles.logo}>{panelAmountRef.current}</Text>
+            <Text style={styles.logo}>{amount}</Text>
             <Text style={styles.logo}>BUZZED IN: LUIS</Text>
             
             <View style={{flexDirection: 'row', marginBottom:20}}>

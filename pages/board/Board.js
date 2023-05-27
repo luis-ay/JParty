@@ -20,16 +20,15 @@ const Board = ({navigation}) => {
     const deductions = useRef(storedDeductions)
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
-    const [currAmt, setAmt] = useState(0)
-    const [panelOpen, setPanel] = useState(false)
     const panelAmountRef = useRef(0)
     
     const isFocused = useIsFocused() ///sets scores every time we navigate to board screen isFocused -> true, runs useEffect
+    
     useEffect(()=> {
         if (isFocused) {
             setScores(storedScores)
         }
-      },[isFocused])
+      },[isFocused, storedScores])
 
 
     const handleDoublePress = () => {  //Sets values for double jeopardy
@@ -48,18 +47,9 @@ const Board = ({navigation}) => {
 
     const bottomSheetModalRef = useRef(null) //used for referencing modal during open/close
 
-    // const handlePresentModalPress = (val) => { //opens modal, sets val which is used as prop for modal
-    //     console.log('opening panel')
-    //     setAmt(val)
-    //     console.log(`Amount being sent to modal: ${currAmt}`)
-    //     setPanel(true)
-    //     bottomSheetModalRef.current?.present();
-    //   }
-
-    const closePanel = () => { //sets scores as signal is sent that modal should close
-        console.log('closing panel')
+    const settingScores = () => { //sets scores as signal is sent that modal should close
+        console.log('setting scores, scores should be updated soon')
         setScores(storedScores)
-        setPanel(false)
     }
 
   return (
@@ -89,7 +79,7 @@ const Board = ({navigation}) => {
                 </View>
             </ScrollView>
             <BottomSheetModalProvider>
-                    <HostPanel modalRef={bottomSheetModalRef} panelAmountRef={panelAmountRef} close={closePanel}/>
+                    <HostPanel modalRef={bottomSheetModalRef} panelAmountRef={panelAmountRef.current} close={settingScores}/>
             </BottomSheetModalProvider>
         </View>
   )
