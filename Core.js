@@ -8,6 +8,7 @@ import Settings from './pages/settings/Settings';
 import Board from './pages/board/Board';
 import HostPanel from './pages/board/HostPanel';
 import Buzzer from './pages/contestant_screens/Buzzer';
+import FinalJParty from './pages/contestant_screens/FinalJParty';
 
 
 
@@ -29,6 +30,7 @@ const Core = () => {
           <Stack.Screen name ='Board' component={Board} />
           <Stack.Screen name ='HostPanel' component={HostPanel} />
           <Stack.Screen name ='Buzzer' component={Buzzer} />
+          <Stack.Screen name ='FinalJParty' component={FinalJParty} />
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>

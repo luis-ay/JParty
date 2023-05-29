@@ -7,17 +7,22 @@ const Buzzer = ({navigation}) => {
 
 
     const handleBuzzIn = () => {
-        console.log('Buzzed In')
+        if (ready) {
+            console.log('Buzzed In')
+        }
     }
 
   return (
     <Pressable onPress={()=>handleBuzzIn()}>
         <View style={ready? styles.ready : styles.unready}>
-        <Text style={styles.score}>{4000}</Text>
-        <Text style={{color:'white', fontSize: 20}}>{ready ? 'Click anywhere to buzz in.': 'Wait for host.'}</Text>
-        <Pressable onPress={()=>setReady(!ready)}><Text>Click Ready/Unready</Text></Pressable>
-        <Pressable onPress={() => navigation.navigate('Main')}>
-            <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+            <Text style={styles.score}>{4000}</Text>
+            <Text style={{color:'white', fontSize: 20}}>{ready ? 'Click anywhere to buzz in.': 'Wait for host.'}</Text>
+            <Pressable onPress={()=>setReady(!ready)}><Text>Click Ready/Unready</Text></Pressable>
+            <Pressable onPress={() => navigation.navigate('Main')}>
+                <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate('FinalJParty')}>
+                <Text style={{fontSize:36, color:'white', top:'50%'}}>FinalJParty</Text>
             </Pressable>
         </View>
     </Pressable>

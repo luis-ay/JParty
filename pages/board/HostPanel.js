@@ -119,13 +119,13 @@ const HostPanel = ({panelAmount, modalRef}) => {
       alignItems: 'center',
       marginVertical: 20,
       marginHorizontal: '10%',
-      borderRadius: '10%',
+      borderRadius: 10,
   }, 
     dailyOFFButton: {
       backgroundColor: '#2a1a66',
       alignItems: 'center',
       marginVertical: 20,
       marginHorizontal: '10%',
-      borderRadius: '10%'
+      borderRadius: 10,
   }
   })

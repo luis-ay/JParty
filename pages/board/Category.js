@@ -21,7 +21,7 @@ export default Category
 const styles = StyleSheet.create({
     active: {
         backgroundColor: '#6A41FF',
-        borderRadius: '25%',
+        borderRadius: 25,
         marginHorizontal: '5%',
         marginVertical: '2%',
         height: 100,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     inactive : {
         backgroundColor: '#5a5d70',
-        borderRadius: '25%',
+        borderRadius: 25,
         marginHorizontal: '5%',
         marginVertical: '2%',
         height: 100,

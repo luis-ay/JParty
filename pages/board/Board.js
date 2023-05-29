@@ -125,13 +125,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 20,
         marginHorizontal: '10%',
-        borderRadius: '10%',
+        borderRadius: 10,
     }, 
     singleJeopardyButton: {
         backgroundColor: '#2a1a66',
         alignItems: 'center',
         marginVertical: 20,
         marginHorizontal: '10%',
-        borderRadius: '10%'
+        borderRadius: 10
     }
 })
