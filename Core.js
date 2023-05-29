@@ -7,6 +7,7 @@ import HowToPlay from './pages/how_to/HowToPlay';
 import Settings from './pages/settings/Settings';
 import Board from './pages/board/Board';
 import HostPanel from './pages/board/HostPanel';
+import Buzzer from './pages/contestant_screens/Buzzer';
 
 
 
@@ -27,6 +28,7 @@ const Core = () => {
           <Stack.Screen name ='Settings' component={Settings} />
           <Stack.Screen name ='Board' component={Board} />
           <Stack.Screen name ='HostPanel' component={HostPanel} />
+          <Stack.Screen name ='Buzzer' component={Buzzer} />
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>
