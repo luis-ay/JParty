@@ -19,12 +19,12 @@ const MainMenu = ({navigation}) => {
 
   const handleJoinPress=()=> {
     dispatch(makeHost(false))
-    navigation.navigate('HowTo')
-    AsyncStorage.clear()
+    navigation.navigate('Buzzer')
   }
-
+  
   const handleGameHistory = () => {
     dispatch(clearGame())
+    AsyncStorage.clear()
   }
 
   return (

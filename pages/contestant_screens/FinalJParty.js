@@ -1,0 +1,80 @@
+import { StyleSheet, Text, View, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import { TextInput } from 'react-native-gesture-handler'
+import { Slider } from '@miblanchard/react-native-slider'
+
+const FinalJParty = ({navigation}) => {
+    const [ready, setReady] = useState(false)
+    const [wager, setWager] = useState(0)
+    const [answer, setAnswer] = useState('')
+    const [limit, setLimit] = useState(1000)
+
+    const handleSubmit = () => {
+        console.log(`Turned In :${ready? 'wager': 'answer'} which is :${ready? wager: answer}`)
+    }
+
+  return (
+    <View style={styles.container}>
+        {ready ?
+        <View style={{alignItems:'center', width:'100%', height:'50%'}}>
+            <Text style={styles.title}>Enter Wager:</Text>
+            <Text style={styles.score}>{wager}</Text> 
+            <View style={{width:'70%', marginTop:'15%'}}>
+                <Slider value={wager} onValueChange={setWager} maximumTrackTintColor='white' minimumTrackTintColor='#8e6ffc' maximumValue={limit} minimumValue={0} step={100} trackClickable={true} thumbStyle={styles.thumb} trackStyle={styles.track}/>
+            </View>
+        </View>:
+        <View style={{alignItems:'center', width:'100%', height:'50%'}}>
+            <Text style={styles.title}>Enter Answer:</Text>
+            <TextInput style={styles.answer} onChangeText={setAnswer} placeholder='What is deez' placeholderTextColor={'#b8b3c9'} maxLength={30} returnKeyType="done"></TextInput>
+        </View>
+        }
+        <Pressable onPress={()=> handleSubmit()}><Text style={{fontSize: 40, color: 'white', fontWeight: 800}}>Submit</Text></Pressable>
+        <Pressable onPress={()=>setReady(!ready)}><Text>Click wager/answer</Text></Pressable>
+        <Pressable onPress={() => navigation.navigate('Main')}>
+            <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+        </Pressable>
+    </View>
+  )
+}
+
+export default FinalJParty
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#38218a',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
+    },
+    title: {
+        margin: '10%',
+        fontSize: 40,
+        color: 'white',
+        fontWeight: 800
+    },
+    score: {
+        fontSize: 48,
+        color: 'white',
+        fontWeight: 800,
+        marginTop:'10%'
+    },
+    answer: {
+        marginVertical: '30%',
+        backgroundColor: 'white',
+        width: '70%',
+        height: '15%',
+        borderRadius: 25,
+        padding: 15,
+        fontSize: 20,
+    },
+    track: {
+        borderRadius: 25,
+        height: 15,
+    },
+    thumb: {
+        height: 40,
+        width:12,
+        borderRadius:25,
+        backgroundColor: '#6A41FF'
+    }
+})
