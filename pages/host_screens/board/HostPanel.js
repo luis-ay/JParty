@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectDeductions, selectGameMode, subScore } from '../../features/gameSlice'
+import { selectDeductions, selectGameMode, subScore } from '../../../features/gameSlice'
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
-import { addScore } from '../../features/gameSlice'
+import { addScore } from '../../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
 
 const HostPanel = ({panelAmount, modalRef}) => {

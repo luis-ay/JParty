@@ -27,10 +27,10 @@ const Core = () => {
           <Stack.Screen name='Main' component={MainMenu}/>
           <Stack.Screen name ='HowTo' component={HowToPlay} />
           <Stack.Screen name ='Settings' component={Settings} />
-          <Stack.Screen name ='Board' component={Board} />
-          <Stack.Screen name ='HostPanel' component={HostPanel} />
-          <Stack.Screen name ='Buzzer' component={Buzzer} />
-          <Stack.Screen name ='FinalJParty' component={FinalJParty} />
+          <Stack.Screen name ='Board' component={Board} options={{gestureEnabled: false}} />
+          <Stack.Screen name ='HostPanel' component={HostPanel} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='Buzzer' component={Buzzer} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='FinalJParty' component={FinalJParty} options={{gestureEnabled: false}}/>
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>

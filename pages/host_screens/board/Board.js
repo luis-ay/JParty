@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         marginVertical:'10%',
         fontWeight:'700',
         },
-        logoColor: {
+    logoColor: {
         color: '#6A41FF',
         textDecorationLine: 'none',
     },

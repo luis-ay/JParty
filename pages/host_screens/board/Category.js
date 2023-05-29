@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginHorizontal: '5%',
         marginVertical: '2%',
-        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -33,7 +32,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginHorizontal: '5%',
         marginVertical: '2%',
-        height: 100,
         justifyContent: 'center',
         alignItems: 'center'
     },

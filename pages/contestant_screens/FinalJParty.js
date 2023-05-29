@@ -25,11 +25,22 @@ const FinalJParty = ({navigation}) => {
       },[isFocused])
 
     const handleSubmit = () => {
-        console.log(`Turned In :${!ready? 'wager': 'answer'} which is :${!ready? wager: answer}`)
-        setSubmitted(true)
-        ready ? dispatch(addFinalAnswer({contestant:name, answer:answer})) : dispatch(addWager({contestant:name, wager:wager}))  
+        console.log(`Turned In :${!ready? 'wager': 'answer'} which is :${!ready? wager: answer}`) 
         if (!ready) {
+            dispatch(addWager({contestant:name, wager:wager}))
             setReady(true)
+        } else {
+            checkAnswerInput()
+        }
+    }
+    
+    const checkAnswerInput = () => {
+        if (answer=='') {
+            alert('Please enter answer')
+        }
+        else {
+            dispatch(addFinalAnswer({contestant:name, answer:answer}))
+            setSubmitted(true)
         }
     }
 
