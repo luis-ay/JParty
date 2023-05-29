@@ -1,11 +1,13 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
+    name: 'Enter Name',
     host: false,
     rebuzz: true,
     deductions: false,
     scores: {'Timmy':500, 'Luis':300, 'Bob':400},
     finalJParty:  {},
+    finalJPartyWagers: {},
     contestants:[],
     matchHistory: [],
 }
@@ -27,6 +29,10 @@ const gameSlice = createSlice({
         const hosting = action.payload //true or false
         state.host = hosting
     },
+    changeName: (state, action) => {
+        const newName = action.payload
+        state.name = newName
+    },
     addScore: (state, action) => {
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and amount to add
         const amount = action.payload.amount 
@@ -42,6 +48,14 @@ const gameSlice = createSlice({
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and answer to final jparty
         const answer = action.payload.answer
         state.finalJParty[contestant] = answer
+        console.log(state.finalJParty)
+    },
+    addWager: (state, action) => {
+        const contestant = action.payload.contestant //payload is contestant identifier (name/id) and answer to final jparty
+        const wager = action.payload.wager
+        console.log(wager)
+        state.finalJPartyWagers[contestant] = wager
+        console.log(state.finalJPartyWagers)
     },
     changeGameMode: (state, action) => {
         const rebuzzSetting = action.payload //only need rebuzzSetting bc only one (rebuzz/pass) can be true at a given time
@@ -63,11 +77,12 @@ const gameSlice = createSlice({
 
 
 
-export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame } = gameSlice.actions;
+export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager } = gameSlice.actions;
 export const selectAllScores = (state) => state.game.scores;
 export const selectFinalAnswers = (state) => state.game.finalJParty;
 export const selectGameMode = (state) => state.game.rebuzz;
 export const selectDeductions = (state) => state.game.deductions;
 export const selectMatchHistory = (state) => state.game.matchHistory
+export const selectName = (state) => state.game.name
 
 export default gameSlice.reducer;
