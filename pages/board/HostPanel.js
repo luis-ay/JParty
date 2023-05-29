@@ -5,33 +5,32 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { addScore } from '../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
 
-const HostPanel = ({panelAmount, modalRef, close}) => {
+const HostPanel = ({panelAmount, modalRef}) => {
     const [amount, setAmt] = useState(panelAmount)
     const [dailyDoubleOn, setDailyDouble] = useState(false)
     const rebuzz = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
 
-   
+    useEffect(()=> {
+      setAmt(panelAmount)
+    },[panelAmount])
 
     const snapPoints = useMemo(()=> ['10%','25%','50%','75%'],[])
     
       // callbacks
     const handleSheetChanges = useCallback((index) => {
-      console.log(`amount recieved by panel ${panelAmountRef.current} during ${index > 0? 'open': 'close'}`)
-      setAmt(panelAmountRef.current)
+      console.log(`amount recieved by panel ${panelAmount} during ${index > 0? 'open': 'close'}`)
       // console.log('handleSheetChanges', index);
     }, []);
 
     const handleDailyDouble= () => {
         if (!dailyDoubleOn) {
-            panelAmountRef.current *= 2
-            setAmt(panelAmountRef.current)
+            setAmt(amount*2)  
             setDailyDouble(true)
         }
         else {
-            panelAmountRef.current /= 2
-            setAmt(panelAmountRef.current)
+            setAmt(amount/2)
             setDailyDouble(false)
         }
     }
@@ -41,22 +40,19 @@ const HostPanel = ({panelAmount, modalRef, close}) => {
         // deduct points from contestant score (if deductions are on)
         
         if (deductions) {
-            console.log(`${contestant} failed and got ${panelAmountRef.current} points taken.`)
-            dispatch(subScore({contestant:contestant, amount:panelAmountRef.current}))
+            console.log(`${contestant} failed and got ${amount} points taken.`)
+            dispatch(subScore({contestant:contestant, amount:amount}))
         }
     }
     const handleCorrect = (contestant) => { 
         /////////////////////////////////// LUIS IS HARDCODED FOR NOW ///////////////////////////////////////////////////////////
         //needs to check for rebuzzz
-        console.log(`${contestant} scored and got ${panelAmountRef.current} points added.`)
-        dispatch(addScore({contestant:contestant, amount:panelAmountRef.current}))
-        close()
-        setDailyDouble(false)
-        modalRef.current.close()
+        console.log(`${contestant} scored and got ${amount} points added.`)
+        dispatch(addScore({contestant:contestant, amount:amount}))
+        handleClose()
     }
 
     const handleClose = () => {
-      close()
       setDailyDouble(false)
       modalRef.current.close()
     }

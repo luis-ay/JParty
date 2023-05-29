@@ -20,7 +20,7 @@ const Board = ({navigation}) => {
     const deductions = useRef(storedDeductions)
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
-    const panelAmountRef = useRef(0)
+    const [panelAmt, setPanelAmt] = useState(0)
     
     const isFocused = useIsFocused() ///sets scores every time we navigate to board screen isFocused -> true, runs useEffect
     
@@ -44,13 +44,13 @@ const Board = ({navigation}) => {
         }
     }
 
+    const panelAmountCall = (val) => {
+        setPanelAmt(val)
+        console.log(`recieved from cat click: ${val}`)
+    }
+
 
     const bottomSheetModalRef = useRef(null) //used for referencing modal during open/close
-
-    const settingScores = () => { //sets scores as signal is sent that modal should close
-        console.log('setting scores, scores should be updated soon')
-        setScores(storedScores)
-    }
 
   return (
         <View style={styles.screen}>
@@ -69,7 +69,7 @@ const Board = ({navigation}) => {
 
                 <View style={styles.categoriesContainer}>
 
-                    {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountRef={panelAmountRef} />)}
+                    {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountCall={panelAmountCall} />)}
 
                 </View>
 
@@ -79,7 +79,7 @@ const Board = ({navigation}) => {
                 </View>
             </ScrollView>
             <BottomSheetModalProvider>
-                    <HostPanel modalRef={bottomSheetModalRef} panelAmountRef={panelAmountRef.current} close={settingScores}/>
+                    <HostPanel modalRef={bottomSheetModalRef} panelAmount={panelAmt} />
             </BottomSheetModalProvider>
         </View>
   )

@@ -1,11 +1,11 @@
 import { StyleSheet, Text, Pressable} from 'react-native'
 import React from 'react'
 
-const Category = ({value, answerCount, panelAmountRef, modalOpenRef}) => {
+const Category = ({value, answerCount, panelAmountCall, modalOpenRef}) => {
 
   const handleClick = () => {
-    panelAmountRef.current = value
-    console.log(`Just clicked on category, value should be ${value}, what was sent ${panelAmountRef.current}`)
+    panelAmountCall(value)
+    console.log(`Just clicked on category, value should be ${value}`)
     modalOpenRef.current?.present();
   }
 
