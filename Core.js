@@ -5,10 +5,11 @@ import { enableScreens } from 'react-native-screens';
 import MainMenu from './pages/main_menu/MainMenu';
 import HowToPlay from './pages/how_to/HowToPlay';
 import Settings from './pages/settings/Settings';
-import Board from './pages/board/Board';
-import HostPanel from './pages/board/HostPanel';
+import Board from './pages/host_screens/board/Board';
+import HostPanel from './pages/host_screens/board/HostPanel';
 import Buzzer from './pages/contestant_screens/Buzzer';
 import FinalJParty from './pages/contestant_screens/FinalJParty';
+import FinalJPartyControl from './pages/host_screens/finalJparty/FinalJPartyControl';
 
 
 
@@ -31,6 +32,7 @@ const Core = () => {
           <Stack.Screen name ='HostPanel' component={HostPanel} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='Buzzer' component={Buzzer} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='FinalJParty' component={FinalJParty} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='FinalJPartyControl' component={FinalJPartyControl} options={{gestureEnabled: false}}/>
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>

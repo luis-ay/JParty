@@ -11,7 +11,7 @@ const Category = ({value, answerCount, panelAmountCall, modalOpenRef}) => {
 
   return (
     <Pressable style={answerCount>=5 ? styles.inactive : styles.active} onPress={()=> handleClick()}>
-      <Text style={answerCount>=5 ? styles.inactiveText : styles.activeText} >{value}</Text>
+      <Text style={answerCount>=5 ? styles.inactiveText : styles.activeText} >$ {value}</Text>
     </Pressable>
   )
 }
@@ -21,28 +21,38 @@ export default Category
 const styles = StyleSheet.create({
     active: {
         backgroundColor: '#6A41FF',
-        borderRadius: 25,
+        borderRadius: 15,
         marginHorizontal: '5%',
         marginVertical: '2%',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    inactive : {
+        height: 60,
+      },
+      inactive : {
         backgroundColor: '#5a5d70',
-        borderRadius: 25,
+        borderRadius: 15,
         marginHorizontal: '5%',
         marginVertical: '2%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 60
     },
     activeText: {
-        color: '#FFD700',
+        color: 'white',
         fontSize: 34,
-        fontWeight: 700
-    },
-    inactiveText: {
+        fontWeight: 700,
+        shadowOffset : {width: 3, height: 3},
+        shadowColor: 'black',
+        shadowOpacity: 1,
+        shadowRadius: 0
+      },
+      inactiveText: {
         color: '#aeb1c2',
         fontSize: 34,
-        fontWeight: 700
+        fontWeight: 700,
+        shadowOffset : {width: 3, height: 3},
+        shadowColor: 'black',
+        shadowOpacity: 1,
+        shadowRadius: 0
     }
 })

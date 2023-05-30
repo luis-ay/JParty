@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, Pressable, ScrollView } from 'rea
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { selectAllScores, selectDeductions, selectGameMode } from '../../features/gameSlice'
+import { selectAllScores, selectDeductions, selectGameMode } from '../../../features/gameSlice'
 import Category from './Category'
 import { useIsFocused } from '@react-navigation/native'
 import HostPanel from './HostPanel'
@@ -57,9 +57,14 @@ const Board = ({navigation}) => {
 
             <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer} alwaysBounceVertical={false}>
                 <Text style={styles.logo}>J<Text style={styles.logoColor}>!</Text>PARTY</Text>
-                <Pressable onPress={() => navigation.navigate('Main')}>
-                    <Text style={{fontSize:36, color:'white'}}>Back</Text>
-                </Pressable>
+                <View>
+                    <Pressable onPress={() => navigation.navigate('Main')}>
+                        <Text style={{fontSize:36, color:'white'}}>Back</Text>
+                    </Pressable>
+                    <Pressable onPress={() => navigation.navigate('FinalJPartyControl')}>
+                        <Text style={{fontSize:36, color:'white'}}>FinalJParty</Text>
+                    </Pressable>
+                </View>
 
                 <View>
                     <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
@@ -75,7 +80,7 @@ const Board = ({navigation}) => {
 
                 <View style={styles.scoresContainer}>
                     <Text style={styles.scoreText}>Scores:</Text>
-                    {Object.entries(scores).map(entry => <Text style={styles.scoreText} key={entry[0]}>{entry[0]}: {entry[1]} </Text>)}
+                    {Object.entries(scores).map(entry => <Text style={styles.scoreText} key={entry[0]}>{entry[0]}: $ {entry[1]} </Text>)}
                 </View>
             </ScrollView>
             <BottomSheetModalProvider>
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
         marginTop: 60,
     },
     scrollcontainer: {
-        paddingBottom: 120 ///This is very important for scrolling to the bottom, adjust as needed
+        paddingBottom: 100 ///This is very important for scrolling to the bottom, adjust as needed
     },
     categoriesContainer: {
         width: '100%',

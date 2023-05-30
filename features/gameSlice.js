@@ -5,10 +5,10 @@ const initialState = {
     host: false,
     rebuzz: true,
     deductions: false,
-    scores: {'Timmy':500, 'Luis':300, 'Bob':400},
-    finalJParty:  {},
-    finalJPartyWagers: {},
-    contestants:[],
+    scores: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
+    finalJParty:  {'Timmy':'Deez', 'Luis':'nutz', 'Bob':'bofa','A':'2000', 'B':'1500', 'C':'600'},
+    finalJPartyWagers: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
+    contestants:['Luis','Timmy','Bob'],
     matchHistory: [],
 }
 
@@ -84,5 +84,8 @@ export const selectGameMode = (state) => state.game.rebuzz;
 export const selectDeductions = (state) => state.game.deductions;
 export const selectMatchHistory = (state) => state.game.matchHistory
 export const selectName = (state) => state.game.name
+export const selectWagers = (state) => state.game.finalJPartyWagers
+export const selectAnswers = (state) => state.game.finalJParty
+
 
 export default gameSlice.reducer;
