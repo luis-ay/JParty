@@ -66,16 +66,12 @@ const Board = ({navigation}) => {
                     </Pressable>
                 </View>
 
-                <View>
-                    <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
-                        <Text  style={{fontSize:36, color:'white'}}>{double ?'Single J!Party' : 'Double J!Party'}</Text>
-                    </Pressable>
-                </View>
+                <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
+                    <Text  style={{fontSize:36, color:'white'}}>Double J!Party</Text>
+                </Pressable>
 
                 <View style={styles.categoriesContainer}>
-
                     {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountCall={panelAmountCall} />)}
-
                 </View>
 
                 <View style={styles.scoresContainer}>
