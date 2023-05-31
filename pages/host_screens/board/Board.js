@@ -7,6 +7,7 @@ import Category from './Category'
 import { useIsFocused } from '@react-navigation/native'
 import HostPanel from './HostPanel'
 import { BottomSheetModalProvider, BottomSheetModal } from '@gorhom/bottom-sheet'
+import Contestant from './Contestant'
 
 
 const Board = ({navigation}) => {
@@ -75,8 +76,8 @@ const Board = ({navigation}) => {
                 </View>
 
                 <View style={styles.scoresContainer}>
-                    <Text style={styles.scoreText}>Scores:</Text>
-                    {Object.entries(scores).map(entry => <Text style={styles.scoreText} key={entry[0]}>{entry[0]}: $ {entry[1]} </Text>)}
+                    <Text style={styles.scoreText}>Click on Score To Adjust</Text>
+                    {Object.entries(scores).map(entry => <Contestant key={entry[0]} contestant={entry[0]} currscore={entry[1]}/>)}
                 </View>
             </ScrollView>
             <BottomSheetModalProvider>

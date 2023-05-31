@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         width: width * 0.40,
         height: height * 0.12,
         margin: '2%',
+        justifyContent: 'space-between'
         
     },
     innerContainer: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     },
     score : {
         color: 'white',
-        paddingTop: '5%',
-        fontSize: 30
+        fontSize: 30,
+        paddingBottom: '10%'
     }
 })
