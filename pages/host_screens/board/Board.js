@@ -75,8 +75,8 @@ const Board = ({navigation}) => {
                     {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountCall={panelAmountCall} />)}
                 </View>
 
+                <Text style={styles.scoreText}>Click on Score To Adjust</Text>
                 <View style={styles.scoresContainer}>
-                    <Text style={styles.scoreText}>Click on Score To Adjust</Text>
                     {Object.entries(scores).map(entry => <Contestant key={entry[0]} contestant={entry[0]} currscore={entry[1]}/>)}
                 </View>
             </ScrollView>
@@ -116,7 +116,10 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
     },
     scoresContainer: {
-        marginVertical: '2%',
+        margin: '2%',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between'
     },
     scoreText: {
         color:'white',

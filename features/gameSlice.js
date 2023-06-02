@@ -8,7 +8,7 @@ const initialState = {
     scores: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
     finalJParty:  {'Timmy':'Deez', 'Luis':'nutz', 'Bob':'bofa','A':'2000', 'B':'1500', 'C':'600'},
     finalJPartyWagers: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
-    contestants:['Luis','Timmy','Bob'],
+    contestants:['Luis','Timmy','Bob', 'A', 'B', 'C'],
     matchHistory: [],
 }
 
@@ -37,11 +37,13 @@ const gameSlice = createSlice({
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and amount to add
         const amount = action.payload.amount 
         state.scores[contestant] += amount
+        console.log(`new score for ${contestant}, +${amount}`)
     },
     subScore: (state, action) => {
         const contestant = action.payload.contestant //payload is contestant identifier (name/id) and amount to add
         const amount = action.payload.amount 
         state.scores[contestant] -= amount
+        console.log(`new score for ${contestant}, -${amount}`)
 
     },
     addFinalAnswer: (state, action) => {
@@ -66,9 +68,9 @@ const gameSlice = createSlice({
         state.deductions = deductionsSetting
     },
     clearGame: (state) => {
-        state.contestants = []
-        state.scores = {}
-        state.finalJParty = {}
+        state.scores = initialState.scores
+        state.finalJParty = initialState.finalJParty
+        state.finalJPartyWagers = initialState.finalJPartyWagers
     },
   },
 });

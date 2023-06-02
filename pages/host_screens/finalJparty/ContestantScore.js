@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
 
 const { width, height } = Dimensions.get('window')
 const ContestantScore = ({contestant, currscore, type}) => {
     const [score, setScore] = useState(currscore)
-    const [wager, setWager] = useState('-')
-    const [answer, setAnswer] = useState('-')
 
+    useEffect(()=>{
+        setScore(currscore)
+    },[currscore])
 
   return (
     <Pressable style={styles.container}>

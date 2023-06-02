@@ -24,7 +24,9 @@ const MainMenu = ({navigation}) => {
   
   const handleGameHistory = () => {
     dispatch(clearGame())
-    AsyncStorage.clear()
+    AsyncStorage.getAllKeys()
+        .then(keys => AsyncStorage.multiRemove(keys))
+        .then(() => alert('success'));
   }
 
   return (
