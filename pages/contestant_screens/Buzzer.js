@@ -38,7 +38,7 @@ const Buzzer = ({navigation}) => {
             <Pressable onPress={() => navigation.navigate('Main')}>
                 <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('FinalJParty')}>
+            <Pressable onPress={() => navigation.navigate('Wager')}>
                 <Text style={{fontSize:36, color:'white', top:'50%'}}>FinalJParty</Text>
             </Pressable>
         </View>

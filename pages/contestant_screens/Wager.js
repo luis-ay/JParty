@@ -6,43 +6,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addFinalAnswer, addWager, selectName } from '../../features/gameSlice'
 import { useIsFocused } from '@react-navigation/native'
 
-const FinalJParty = ({navigation}) => {
+const Wager = ({navigation}) => {
     const name = useSelector(selectName)
-    const [answer, setAnswer] = useState('')
-    const [submitted, setSubmitted] = useState(false)
+    const [wager, setWager] = useState(0)
+    const [limit, setLimit] = useState(1000)
 
     const dispatch = useDispatch()
 
-    const isFocused = useIsFocused() 
-    
-    useEffect(()=> {
-        if (isFocused) {
-            setSubmitted(false)
-        }
-      },[isFocused])
-
     const handleSubmit = () => {
-        console.log(`Turned In 'answer' which is :${answer}`) 
-        checkAnswerInput()
+        console.log(`Turned In wager which is :${wager}`) 
+        dispatch(addWager({contestant:name, wager:wager}))
+        navigation.navigate('Waiting')
     }
     
-    const checkAnswerInput = () => {
-        if (answer=='') {
-            alert('Please enter answer')
-        }
-        else {
-            navigation.navigate('Waiting')
-            dispatch(addFinalAnswer({contestant:name, answer:answer}))
-            setSubmitted(true)
-        }
-    }
-
   return (
     <Pressable style={styles.container} onPress={()=> Keyboard.dismiss()}>
         <Text style={styles.logo}>Final<Text style={styles.logoColor}>J!</Text>Party</Text>
         <View style={{alignItems:'center', width:'100%', height:'50%'}}>
-            <Text style={styles.title}>Enter Answer:</Text>
-            <TextInput style={styles.answer} readOnly={submitted} onChangeText={setAnswer} placeholder='What is deez' placeholderTextColor={'#b8b3c9'} maxLength={30} returnKeyType="done"></TextInput>
+            <Text style={styles.title}>Enter Wager:</Text>
+            <Text style={styles.score}>${wager}</Text> 
+            <View style={{width:'70%', marginTop:'15%'}}>
+                <Slider value={wager} onValueChange={setWager} maximumTrackTintColor='white' minimumTrackTintColor='#8e6ffc' maximumValue={limit} minimumValue={0} step={100} trackClickable={true} thumbStyle={styles.thumb} trackStyle={styles.track}/>
+            </View>
         </View>
         <Pressable onPress={()=> handleSubmit()}><Text style={{fontSize: 40, color: 'white', fontWeight: 800}}>Submit</Text></Pressable>
         <Pressable onPress={() => navigation.navigate('Main')}>
@@ -52,7 +37,7 @@ const FinalJParty = ({navigation}) => {
   )
 }
 
-export default FinalJParty
+export default Wager
 
 const styles = StyleSheet.create({
     container: {
@@ -82,15 +67,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 800,
         marginTop:'10%'
-    },
-    answer: {
-        marginVertical: '30%',
-        backgroundColor: 'white',
-        width: '70%',
-        height: '15%',
-        borderRadius: 25,
-        padding: 15,
-        fontSize: 20,
     },
     track: {
         borderRadius: 25,

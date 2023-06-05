@@ -10,6 +10,9 @@ import HostPanel from './pages/host_screens/board/HostPanel';
 import Buzzer from './pages/contestant_screens/Buzzer';
 import FinalJParty from './pages/contestant_screens/FinalJParty';
 import FinalJPartyControl from './pages/host_screens/finalJparty/FinalJPartyControl';
+import Waiting from './pages/contestant_screens/Waiting';
+import Wager from './pages/contestant_screens/Wager';
+import Ending from './pages/ending/Ending';
 
 
 
@@ -33,6 +36,9 @@ const Core = () => {
           <Stack.Screen name ='Buzzer' component={Buzzer} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='FinalJParty' component={FinalJParty} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='FinalJPartyControl' component={FinalJPartyControl} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='Waiting' component={Waiting} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='Wager' component={Wager} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='Ending' component={Ending} options={{gestureEnabled: false}}/>
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>
