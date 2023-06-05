@@ -21,6 +21,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
       // callbacks
     const handleSheetChanges = useCallback((index) => {
       console.log(`amount recieved by panel ${panelAmount} during ${index > 0? 'open': 'close'}`)
+      console.log(`Daily double is ${dailyDoubleOn}`)
       // console.log('handleSheetChanges', index);
     }, []);
 
@@ -53,8 +54,11 @@ const HostPanel = ({panelAmount, modalRef}) => {
     }
 
     const handleClose = () => {
-      setDailyDouble(false)
       modalRef.current.close()
+      if (dailyDoubleOn) {
+        setDailyDouble(false)
+        setAmt(amount/2)
+      }
     }
 
 
@@ -75,7 +79,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
               <Text style={{fontSize:36, color:'white'}}>Back</Text>
             </Pressable>
 
-            <Text style={styles.logo}>{amount}</Text>
+            <Text style={styles.logo}>${amount}</Text>
             <Text style={styles.logo}>BUZZED IN: LUIS</Text>
             
             <View style={{flexDirection: 'row', marginBottom:20}}>

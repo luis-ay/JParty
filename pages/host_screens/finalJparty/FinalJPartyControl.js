@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   scrollcontainer: {
-    paddingBottom: 400, ///This is very important for scrolling to the bottom, adjust as needed
+    paddingBottom: 200, ///This is very important for scrolling to the bottom, adjust as needed
     alignItems: 'center'
   },
   logo:{
