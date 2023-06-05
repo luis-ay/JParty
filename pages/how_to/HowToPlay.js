@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, ScrollView } from 'react-native'
 import React from 'react'
 import QuizSVG from "./QuizSVG"
-import HostSVG from "./HostSVG"
+import WifiSVG from "./WifiSVG"
 
-
+const { width, height } = Dimensions.get('window')
 const HowToPlay = ({navigation}) => {
   return (
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer}>
@@ -13,20 +13,20 @@ const HowToPlay = ({navigation}) => {
         <View style={styles.underline}></View>
         <Text style={styles.sectionInfo}>Introducing J <Text style={styles.logoColor}>!</Text> Party, the ultimate Jeopardy companion app that brings the excitement of the iconic game show right to your fingertips! With J <Text style={styles.logoColor}>!</Text> Party, you can host your very own trivia showdown with up to __ friends or family members, as you battle it out to become the J <Text style={styles.logoColor}>!</Text> Party champion.</Text>
        
-        <Text style={styles.sectionTitle}>Note:</Text>
-        <View style={styles.underline}></View>
-        <Text style={styles.sectionInfo}>This application works best if all of the participants are connected to the same Wi-Fi network or Hotspot connection.{'\n'}</Text>
-        
-        <QuizSVG/>
+        <View style={styles.noticeContainer}>
+          <Text style={styles.noticeTitle}>Notice</Text>
+          <View style={styles.noticeUnderline}></View>
+          <Text style={styles.noticeInfo}>This application works best if all participants are connected to the same Wi-Fi network or Hotspot connection.</Text>
+          <WifiSVG/>
+          
+        </View>
         
         <Text style={styles.sectionTitle}>{'\n'}Roles</Text>
         <View style={styles.underline}></View>
         <Text style={styles.sectionInfo}>One player will take on the role of <Text style={styles.hostColor}>host</Text>, while the remaining participants will become contestants.{'\n'}{'\n'}
-        As the <Text style={styles.hostColor}>host</Text> you will have the responsibility of:{'\n'}{'\n'}   1. Ensuring all participants are{'\n'}{'\t'} connected and ready to play.{'\n'}{'\n'}   2. Starting the game and maintaining{'\n'}{'\t'}  its flow.{'\n'}{'\n'}   3. Awarding or deducting points for {'\n'}{'\t'}  correct and incorrect answers.{'\n'}{'\n'}   4. Dismissing questions if the answer{'\n'}{'\t'}  has been revealed before players{'\n'}{'\t'}  on their devices have answered.{'\n'}{'\n'}   5. Awarding Daily Doubles and {'\n'}{'\t'}  overseeing wagering.{'\n'}{'\n'}   6. Orienting Final J <Text style={styles.logoColor}>!</Text> Party.</Text>  
+        As the <Text style={styles.hostColor}>host</Text> you will have the responsibility of:{'\n'}{'\n'}   1. Ensuring all participants are{'\n'}{'\t'} connected and starting the game.{'\n'}{'\n'}   2. Awarding or deducting points for {'\n'}{'\t'}  correct and incorrect answers.{'\n'}{'\n'}   3. Dismissing questions if the answer{'\n'}{'\t'}  has been revealed before players{'\n'}{'\t'}  on their devices have answered.{'\n'}{'\n'}   4. Awarding Daily Doubles and {'\n'}{'\t'}  overseeing final J <Text style={styles.logoColor}>!</Text> Party.{'\n'}{'\n'}As a <Text style={styles.logoColor}>contestant</Text> your main responsibilities include:{'\n'}{'\n'}   1. Joining the <Text style={styles.hostColor}>host</Text>'s game session.{'\n'}{'\n'}   2. Being ready to compete.{'\n'}{'\n'}   3. Buzzing in promptly, and providing{'\n'}{'\t'}  your response within the allotted {'\n'}{'\t'}  time.</Text>  
     
-        <HostSVG/>
-
-        <Text style={styles.sectionInfo}>As a <Text style={styles.logoColor}>contestant</Text> your main responsibilities include:{'\n'}{'\n'}   1. Joining the <Text style={styles.hostColor}>host</Text>'s game session.{'\n'}{'\n'}   2. Being ready to compete.{'\n'}{'\n'}   3. Buzzing in promptly, and providing{'\n'}{'\t'}  your response within the allotted {'\n'}{'\t'}  time.</Text>
+        <QuizSVG/>
 
         <Text style={styles.sectionTitle}>FREE FOR ALL<Text style={styles.logoColor}>!</Text></Text>
         <View style={styles.underline}></View>
@@ -40,9 +40,9 @@ const HowToPlay = ({navigation}) => {
         <View style={styles.underline}></View>
         <Text style={styles.sectionInfo}>The contestants get to answer in the order that they buzzed in. This process continues up until a correct answer is given or until the question is dismissed.</Text>
 
-        <Text style={styles.sectionTitle}>DEDUCTIONS DISABLED<Text style={styles.logoColor}>!</Text></Text>
+        <Text style={styles.sectionTitle}>DEDUCTIONS<Text style={styles.logoColor}>!</Text></Text>
         <View style={styles.underline}></View>
-        <Text style={styles.sectionInfo}>By disabling deductions, players can enjoy the game without the worry of losing points for incorrect answers.</Text>
+        <Text style={styles.sectionInfo}>By disabling deductions, players can enjoy the game without the stressor of losing points for incorrect answers.</Text>
 
         <Pressable onPress={() => navigation.navigate('Main')}>
           <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
@@ -51,10 +51,11 @@ const HowToPlay = ({navigation}) => {
       </ScrollView>
   )
 }
-
+/*TOP FOR TEXT STYLE onPress does that need to be changed to a dimensional format*/
 export default HowToPlay
 
 const styles = StyleSheet.create({
+  
   container: {
     backgroundColor: '#16182A',
     /*flex: 1,
@@ -63,7 +64,34 @@ const styles = StyleSheet.create({
   },
   scrollcontainer: {
     marginTop:100,
-    paddingBottom: 900 ///This is very important for scrolling to the bottom, adjust as needed
+    paddingBottom: 500 ///This is very important for scrolling to the bottom, adjust as needed
+  },
+  noticeContainer: {
+    borderColor: '#6a41ff',
+    borderWidth:  Dimensions.get("screen").width * 0.01,
+    borderRadius: Dimensions.get("screen").width * 0.1,
+   /* width: width,
+    height: height * 0.8,
+    backgroundColor: '#16182A',*/
+  },
+  noticeInfo:{
+    fontSize:18,
+    color:'white',
+    justifyContent: 'center',
+    marginLeft: Dimensions.get("screen").width * 0.10,
+    marginTop:  Dimensions.get("screen").height * 0.05,
+  },
+  noticeTitle:{
+    textAlign: "center",
+    fontSize: 40,
+    color:'white',
+  },
+  noticeUnderline: {
+    
+    width:  Dimensions.get("screen").height * 0.5,
+    height: Dimensions.get("screen").height * 0.01,
+    borderBottomWidth: 1,
+    borderBottomColor: '#6A41FF',
   },
   logo:{
     fontSize:60,
@@ -73,24 +101,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   sectionTitle:{
+    justifyContent: 'center',
     fontSize:40,
     color:'white',
-    left: '5%',
+    left: Dimensions.get("screen").height * 0.01,
     fontWeight:'700',
   },
   sectionInfo:{
     fontSize:18,
     justifyContent: 'center',
-    marginLeft:'10%',
-    marginRight:'5%',
-    marginTop:'5%',
-    marginBottom:'11%',
+    marginLeft:   Dimensions.get("screen").width * 0.1,
+    marginRight:  Dimensions.get("screen").width * 0.05,
+    marginTop:    Dimensions.get("screen").height * 0.02,
+    marginBottom: Dimensions.get("screen").height * 0.05,
     color:'white',
   },
   underline: {
-    width: '85%',
+    width: Dimensions.get("screen").width * 0.88,
     bottom:'0%',
-    left: '3.5%',
+    left: Dimensions.get("screen").width * 0.03,
     height: 1,
     borderBottomWidth: 1,
     borderBottomColor: '#6A41FF',

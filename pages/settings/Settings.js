@@ -31,8 +31,19 @@ const Settings = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.logo}>SETTINGS<Text style={styles.logoColor}>!</Text></Text>
       
+      <View style={styles.optionContainer}>
+        <Text style={styles.optionTitle}>FREE 4 ALL<Text style={styles.logoColor}>!</Text></Text>
+        <Switch
+          trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
+          thumbColor={'#FFF'}
+
+          style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+        />
+      </View>
+
       <View style={styles.underline}></View>
-      
+
+
       <View style={styles.optionContainer}>
         <Text style={styles.optionTitle}>RE<Text style={styles.logoColor}>!</Text>BUZZ</Text>
         <Switch
@@ -60,6 +71,7 @@ const Settings = ({navigation}) => {
 
       <View style={styles.underline}></View>
 
+
       <View style={styles.optionContainer}>
         <Text style={styles.optionTitle}>DEDUCTIONS<Text style={styles.logoColor}>!</Text></Text>
         <Switch
@@ -73,22 +85,10 @@ const Settings = ({navigation}) => {
 
       <View style={styles.underline}></View>
 
-      <View style={styles.optionContainer}>
-        <Text style={styles.optionTitle}>FREE FOR ALL<Text style={styles.logoColor}>!</Text></Text>
-        <Switch
-          trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
-          thumbColor={'#FFF'}
-
-          style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-        />
-      </View>
-      <View style={styles.underline}></View>
 
       <Pressable onPress={() => navigation.navigate('Main')}>
         <Text style={{fontSize:36, color:'white'}}>Back</Text>
       </Pressable>
-
-      
 
     </SafeAreaView>
   )
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   underline: {
-    width: '100%',
-    bottom:'3%',
+    width: '95%',
+    bottom:'5.5%',
     height: 1,
     borderBottomWidth: 2,
     borderBottomColor: '#6A41FF',
