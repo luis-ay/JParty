@@ -72,6 +72,9 @@ const gameSlice = createSlice({
         state.finalJParty = initialState.finalJParty
         state.finalJPartyWagers = initialState.finalJPartyWagers
     },
+    addGame: (state) => {
+        state.matchHistory = [...state.matchHistory, state.scores]
+    }
   },
 });
 
@@ -79,7 +82,7 @@ const gameSlice = createSlice({
 
 
 
-export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager } = gameSlice.actions;
+export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager, addGame } = gameSlice.actions;
 export const selectAllScores = (state) => state.game.scores;
 export const selectFinalAnswers = (state) => state.game.finalJParty;
 export const selectGameMode = (state) => state.game.rebuzz;
@@ -88,6 +91,18 @@ export const selectMatchHistory = (state) => state.game.matchHistory
 export const selectName = (state) => state.game.name
 export const selectWagers = (state) => state.game.finalJPartyWagers
 export const selectAnswers = (state) => state.game.finalJParty
+export const selectSortedScores = (state) => {
+    let sortedScores = []
+    const scores = state.game.scores
+    Object.entries(scores).forEach(entry=>
+        sortedScores.push([entry[0],entry[1]])
+    )
+    console.log(`unsorted sortedScores: ${sortedScores}`)
+    sortedScores.sort(function(a,b) {return a[1]-b[1]})
+    sortedScores.reverse()
+    console.log(`sorted sortedScores: ${sortedScores}`)
+    return sortedScores
+}
 
 
 export default gameSlice.reducer;
