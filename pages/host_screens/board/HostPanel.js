@@ -5,6 +5,9 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { addScore } from '../../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
 import { JumpingTransition } from 'react-native-reanimated'
+import CheckSVG from "../../../SVGS/CheckSVG"
+import CrossSVG from "../../../SVGS/CrossSVG"
+import BackButtonSVG from "../../../SVGS/BackButtonSVG"
 
 const HostPanel = ({panelAmount, modalRef}) => {
     const [amount, setAmt] = useState(panelAmount)
@@ -73,9 +76,8 @@ const HostPanel = ({panelAmount, modalRef}) => {
           backgroundStyle={styles.container}
         >
           <View style={styles.modalContentContainer}>
-        
           
-
+            
             <Text style={styles.panelText}>BUZZED IN: LUIS</Text>
 
             <View style={styles.underline}></View>
@@ -90,8 +92,8 @@ const HostPanel = ({panelAmount, modalRef}) => {
             </Pressable>
 
             <View style={{flexDirection: 'row', marginBottom:20}}>
-              <Pressable style={{marginRight: 40}}>
-                  <Text style={{fontSize:36, color:'green'}} onPress={()=>handleCorrect('Luis')}>Correct</Text>
+              <Pressable style={{marginRight: 40}} onPress={()=>handleCorrect('Luis')}>
+                  <CheckSVG />
               </Pressable>
 
               <Pressable >
