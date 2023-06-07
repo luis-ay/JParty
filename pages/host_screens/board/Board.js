@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, ScrollView, } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Alert } from 'react-native'
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { selectAllScores, selectDeductions, selectGameMode } from '../../../features/gameSlice'
+import { selectAllScores, selectDeductions, selectGameMode, addGame , clearGame } from '../../../features/gameSlice'
 import Category from './Category'
 import { useIsFocused } from '@react-navigation/native'
 import HostPanel from './HostPanel'
 import { BottomSheetModalProvider, BottomSheetModal } from '@gorhom/bottom-sheet'
 import Contestant from './Contestant'
+
 
 
 const Board = ({navigation}) => {
@@ -21,6 +22,7 @@ const Board = ({navigation}) => {
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
     const [panelAmt, setPanelAmt] = useState(0)
+    const dispatch = useDispatch()
     
     const isFocused = useIsFocused() ///sets scores every time we navigate to board screen isFocused -> true, runs useEffect
     
@@ -49,6 +51,22 @@ const Board = ({navigation}) => {
         console.log(`recieved from cat click: ${val}`)
     }
 
+    const handleGameEnd = () => {
+        dispatch(addGame())
+        dispatch(clearGame())
+        navigation.navigate('Main')
+    }
+
+    const endGameAlert = () => {
+        Alert.alert('Warning', 'Are you sure you want to end the game before Final J!Party?', [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => handleGameEnd()},
+          ]);
+    }
 
     const bottomSheetModalRef = useRef(null) //used for referencing modal during open/close
 
@@ -60,7 +78,9 @@ const Board = ({navigation}) => {
             <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer} alwaysBounceVertical={false}>
                 
             <View style={styles.backAndEndContainer}>
-                    <Text style={styles.endGameText}>End Game</Text>
+                    <Pressable onPress={()=> endGameAlert()}>
+                        <Text style={styles.endGameText}>End Game</Text>
+                    </Pressable>
                     
                     <Pressable onPress={() => navigation.navigate('Main')}>
                         <Text style={{fontSize:25, color:'white',marginRight: Dimensions.get("screen").height * 0.225}}>Back</Text>
