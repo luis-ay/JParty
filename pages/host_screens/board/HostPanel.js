@@ -8,6 +8,7 @@ import { JumpingTransition } from 'react-native-reanimated'
 import CheckSVG from "../../../SVGS/CheckSVG"
 import CrossSVG from "../../../SVGS/CrossSVG"
 import BackButtonSVG from "../../../SVGS/BackButtonSVG"
+import XSvgComponent from '../../../SVGS/XSVG'
 
 const HostPanel = ({panelAmount, modalRef}) => {
     const [amount, setAmt] = useState(panelAmount)
@@ -91,13 +92,13 @@ const HostPanel = ({panelAmount, modalRef}) => {
                 <Text style={{fontSize:36, color:'#FFD700'}} onPress={handleDailyDouble}>Daily Double</Text>
             </Pressable>
 
-            <View style={{flexDirection: 'row', marginBottom:20}}>
-              <Pressable style={{marginRight: 40}} onPress={()=>handleCorrect('Luis')}>
+            <View style={{flexDirection: 'row'}}>
+              <Pressable onPress={()=>handleCorrect('Luis')} style={{width:'20%'}}>
                   <CheckSVG />
               </Pressable>
-
-              <Pressable >
-                  <Text style={{fontSize:36, color:'red'}} onPress={()=>handleIncorrect('Luis')}>Incorrect</Text>
+              
+              <Pressable onPress={()=>handleIncorrect('Luis')}>
+                  <CrossSVG/>
               </Pressable>
             </View>
 
