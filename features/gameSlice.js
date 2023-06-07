@@ -75,10 +75,14 @@ const gameSlice = createSlice({
     },
     addGame: (state) => {
         state.matchHistory = [...state.matchHistory, {date: state.date, scores: state.scores}]
+        console.log(`matchHistory: ${JSON.stringify(state.matchHistory)}`)
     },
     changeDate: (state) => {
         const newDate = new Date()
         state.date = {'year':newDate.getFullYear(), 'month':newDate.getMonth()+1, 'day':newDate.getDate()}
+    },
+    clearMatchHistory: (state) => {
+        state.matchHistory = initialState.matchHistory
     }
   },
 });
@@ -87,7 +91,7 @@ const gameSlice = createSlice({
 
 
 
-export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager, addGame, changeDate } = gameSlice.actions;
+export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager, addGame, changeDate, clearMatchHistory } = gameSlice.actions;
 export const selectAllScores = (state) => state.game.scores;
 export const selectFinalAnswers = (state) => state.game.finalJParty;
 export const selectGameMode = (state) => state.game.rebuzz;

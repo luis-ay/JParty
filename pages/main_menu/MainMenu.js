@@ -12,7 +12,7 @@ const MainMenu = ({navigation}) => {
 
   const handleHostPress =() => {
     dispatch(makeHost(true))
-    
+
     dispatch(addContestant('Tim'))
     dispatch(addContestant('Luis'))
     dispatch(addContestant('Bob'))
@@ -28,9 +28,9 @@ const MainMenu = ({navigation}) => {
   
   const handleGameHistory = () => {
     dispatch(clearGame())
-    AsyncStorage.getAllKeys()
-        .then(keys => AsyncStorage.multiRemove(keys))
-        .then(() => alert('success'));
+    // AsyncStorage.getAllKeys()
+    //     .then(keys => AsyncStorage.multiRemove(keys))
+    //     .then(() => alert('success'));
     navigation.navigate('History')
   }
 

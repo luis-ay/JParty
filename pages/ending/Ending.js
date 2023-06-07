@@ -2,14 +2,13 @@ import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addGame, selectAllScores, selectMatchHistory, selectSortedScores } from '../../features/gameSlice'
+import { addGame, clearGame, selectAllScores, selectMatchHistory, selectSortedScores } from '../../features/gameSlice'
 import { useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native'
 
 const Ending = ({navigation}) => {
     const storedScores = useSelector(selectAllScores)
     let sortedScores = useSelector(selectSortedScores)
-    const matchHistory = useSelector(selectMatchHistory)
     const [scores, setScores] = useState(sortedScores)
     const isFocused = useIsFocused()
     const dispatch = useDispatch()
@@ -21,7 +20,8 @@ const Ending = ({navigation}) => {
 
     const handleGameEnd = () => {
         dispatch(addGame())
-        // console.log(`current matchHistory ${}`)
+        dispatch(clearGame())
+        navigation.navigate('Main')
     }
 
 
@@ -38,7 +38,7 @@ const Ending = ({navigation}) => {
             </View>
         </View>
         <Text style={styles.thanks}>THANKS FOR PLAYING J!PARTY!!</Text>
-        <Pressable onPress={() => navigation.navigate('Main')}>
+        <Pressable onPress={() => handleGameEnd()}>
             <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
         </Pressable>
     </View>
