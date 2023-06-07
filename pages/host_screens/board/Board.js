@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Pressable, ScrollView, } from 'react-native'
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -56,26 +56,49 @@ const Board = ({navigation}) => {
   return (
         <View style={styles.screen}>
 
-            <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer} alwaysBounceVertical={false}>
-                <Text style={styles.logo}>J<Text style={styles.logoColor}>!</Text>PARTY</Text>
-                <View>
-                    <Pressable onPress={() => navigation.navigate('Main')}>
-                        <Text style={{fontSize:36, color:'white'}}>Back</Text>
-                    </Pressable>
-                    <Pressable onPress={() => navigation.navigate('FinalJPartyControl')}>
-                        <Text style={{fontSize:36, color:'white'}}>FinalJParty</Text>
-                    </Pressable>
-                </View>
+            
 
-                <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
-                    <Text  style={{fontSize:36, color:'white'}}>Double J!Party</Text>
-                </Pressable>
+            <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer} alwaysBounceVertical={false}>
+                
+            <View style={styles.backAndEndContainer}>
+                    <Text style={styles.endGameText}>End Game</Text>
+                    
+                    <Pressable onPress={() => navigation.navigate('Main')}>
+                        <Text style={{fontSize:25, color:'white',marginRight: Dimensions.get("screen").height * 0.225}}>Back</Text>
+                    </Pressable>
+            </View>
+
+            <View style={styles.endGameUnderline}></View>
+
+                <Text style={styles.logo}>GAME<Text style={styles.logoColor}>!</Text>BOARD</Text>
+                
+                    
+                <View style={styles.JButtonContainer}>
+                
+                    <View style={styles.finalJButton}>
+                        <Pressable onPress={() => navigation.navigate('FinalJPartyControl')}>
+                            <Text style={{fontSize:36, color:'white'}}>    FINAL</Text>
+                            <View style={styles.FinalJeopardyUnderline}></View>
+                            <Text style={{fontSize:36, color:'white'}}>J ! PARTY </Text>
+                        </Pressable>
+                        
+                    </View>
+            
+                    <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
+                        <Text  style={{fontSize:36, color:'#FFD700'}}> DOUBLE</Text>
+                        <View style={styles.DoubleJeopardyUnderline}></View>
+                        <Text  style={{fontSize:36, color:'#FFD700'}}> J ! PARTY</Text>
+                    </Pressable>
+                    
+                </View>
+                
+                
 
                 <View style={styles.categoriesContainer}>
                     {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountCall={panelAmountCall} />)}
                 </View>
 
-                <Text style={styles.scoreText}>Click on Score To Adjust</Text>
+                <Text style={styles.scoreText}>Click on Scores To Adjust</Text>
                 <View style={styles.scoresContainer}>
                     {Object.entries(scores).map(entry => <Contestant key={entry[0]} contestant={entry[0]} currscore={entry[1]}/>)}
                 </View>
@@ -92,9 +115,11 @@ export default Board
 
 const styles = StyleSheet.create({
     logo:{
-        fontSize:36,
+        textAlign: 'center',
+        fontSize:55,
         color:'white',
-        marginVertical:'10%',
+        marginTop:Dimensions.get("screen").height * 0.03,
+        marginBottom:Dimensions.get("screen").height * 0.03,
         fontWeight:'700',
         },
     logoColor: {
@@ -106,7 +131,7 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: '#16182A',
-        marginTop: 60,
+        
     },
     scrollcontainer: {
         paddingBottom: 100 ///This is very important for scrolling to the bottom, adjust as needed
@@ -123,20 +148,78 @@ const styles = StyleSheet.create({
     },
     scoreText: {
         color:'white',
+        textAlign:'center',
+        fontSize: 32,
+    },    
+    endGameText: {
+        
+        color:'white',
+        textAlign:'right',
+        marginRight: Dimensions.get("screen").width * 0.04,
+        fontSize: 25,
+    },
+    backAndEndContainer:{
+        flexDirection:'row-reverse',
+        marginTop: Dimensions.get("screen").height * 0.08,
+    },
+    JButtonContainer: {     
+        flexWrap:'wrap',
+        flexDirection:'row-reverse',
+        justifyContent:'space-evenly',
+        alignItems: 'center',
+        marginBottom: '8%',
+    }, 
+    finalJButton:{    
+        borderWidth:4,
+        borderColor:'#6A41FF',
+        alignItems: 'center',
+        paddingVertical:'5%',
+        paddingHorizontal:'2%',
+        borderRadius:25,
+        textAlign:'center',
+    },    
+    doubleJeopardyButton: {
+        borderWidth:4,
+        borderColor: '#FFD700',
+        alignItems: 'center',
+        paddingVertical:'5%',
+        paddingHorizontal:'2%',
+        borderRadius: 25,
+        textAlign:'center',
+    },
+    singleJeopardyButton: {
+        borderWidth:4,
+        borderColor: '#6A41FF',
+        alignItems: 'center',
+        paddingVertical:'5%',
+        paddingHorizontal:'2%',
+        borderRadius: 25,
+        textAlign:'center',
+    },
+    doubleJeopardyTextColor: {
+        color:'#FFD700',
+        textAlign:'center',
         fontSize: 32,
     },
-    doubleJeopardyButton: {
-        backgroundColor: '#FFD700',
-        alignItems: 'center',
-        marginVertical: 20,
-        marginHorizontal: '10%',
-        borderRadius: 10,
-    }, 
-    singleJeopardyButton: {
-        backgroundColor: '#2a1a66',
-        alignItems: 'center',
-        marginVertical: 20,
-        marginHorizontal: '10%',
-        borderRadius: 10
-    }
+    DoubleJeopardyUnderline: {
+        width: Dimensions.get("screen").width * 0.3,
+        height: 1,
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
+    },
+    FinalJeopardyUnderline: {
+         width: Dimensions.get("screen").width * 0.3,
+        height: 1,
+        marginLeft:Dimensions.get("screen").width * 0.055,
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
+    },
+    endGameUnderline: {
+        width: Dimensions.get("screen").width * 0.30,
+        marginLeft:Dimensions.get("screen").width * 0.665,
+        height: 1,
+        alignContent:'flex-end',
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
+    },
 })

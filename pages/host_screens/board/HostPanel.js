@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable, Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectDeductions, selectGameMode, subScore } from '../../../features/gameSlice'
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { addScore } from '../../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
+import { JumpingTransition } from 'react-native-reanimated'
 
 const HostPanel = ({panelAmount, modalRef}) => {
     const [amount, setAmt] = useState(panelAmount)
@@ -72,27 +73,36 @@ const HostPanel = ({panelAmount, modalRef}) => {
           backgroundStyle={styles.container}
         >
           <View style={styles.modalContentContainer}>
+        
+          
 
-            <Text style={styles.logo}>HOST PANEL<Text style={styles.logoColor}>!</Text></Text>
+            <Text style={styles.panelText}>BUZZED IN: LUIS</Text>
 
-            <Pressable onPress={() =>  handleClose()}>
-              <Text style={{fontSize:36, color:'white'}}>Back</Text>
-            </Pressable>
+            <View style={styles.underline}></View>
 
-            <Text style={styles.logo}>${amount}</Text>
-            <Text style={styles.logo}>BUZZED IN: LUIS</Text>
-            
+            <View style={styles.moneyContainer}>
+              <Text style={styles.money}>${amount}</Text>
+            </View>
+
+            <Pressable style={dailyDoubleOn? styles.dailyOFFButton : styles.dailyONButton}>
+                <Text style={{fontSize:36, color:'#FFD700'}} onPress={handleDailyDouble}>Daily Double</Text>
+              </Pressable>
+
             <View style={{flexDirection: 'row', marginBottom:20}}>
+         
               <Pressable style={{marginRight: 40}}>
                   <Text style={{fontSize:36, color:'green'}} onPress={()=>handleCorrect('Luis')}>Correct</Text>
               </Pressable>
+
               <Pressable >
                   <Text style={{fontSize:36, color:'red'}} onPress={()=>handleIncorrect('Luis')}>Incorrect</Text>
               </Pressable>
             </View>
-            <Pressable style={dailyDoubleOn? styles.dailyOFFButton : styles.dailyONButton}>
-              <Text style={{fontSize:36, color:'orange'}} onPress={handleDailyDouble}>Daily Double</Text>
+
+            <Pressable onPress={() =>  handleClose()}>
+              <Text style={{fontSize:36, color:'white'}}>Back</Text>
             </Pressable>
+            
           </View>
         </BottomSheetModal>
     )
@@ -108,22 +118,43 @@ const HostPanel = ({panelAmount, modalRef}) => {
       flex: 1,
       alignItems: 'center',
     },
-    logo:{
-      fontSize:36,
+    moneyContainer: {
+      backgroundColor: '#16182A',
+      height: Dimensions.get("screen").height * 0.15,/*padding encroached upon height so made 8.1 to fit Gs*/
+      width:  Dimensions.get("screen").width * 0.70,
+      borderRadius: Dimensions.get("screen").width * 0.05,
+      marginVertical: Dimensions.get("screen").height * 0.05,
+      textAlign:'center',
+      justifyContent:'center'
+    },
+    money:{
+      textAlign:'center',
+      fontSize:60,
       color:'white',
-      marginVertical:'10%',
+      //marginVertical:'10%',
+      fontWeight:'700'
+      
+    },
+    panelText:{
+      fontSize:40,
+      color:'white',
+      marginVertical:'5%',
       fontWeight:'700'
     },
-    logoColor: {
+    moneyColor: {
       color: '#6A41FF',
       textDecorationLine: 'none',
     },
     dailyONButton: {
-      backgroundColor: '#FFD700',
+      backgroundColor: '#16182A',
+      borderWidth:2,
       alignItems: 'center',
-      marginVertical: 20,
-      marginHorizontal: '10%',
-      borderRadius: 10,
+      //marginTop:Dimensions.get("screen").height * 0.05,
+      height: Dimensions.get("screen").height * 0.15,/*padding encroached upon height so made 8.1 to fit Gs*/
+      width:  Dimensions.get("screen").width * 0.6,
+      borderRadius: 25,
+      borderColor: '#FFD700',
+      justifyContent:'center'
   }, 
     dailyOFFButton: {
       backgroundColor: '#2a1a66',
@@ -131,5 +162,11 @@ const HostPanel = ({panelAmount, modalRef}) => {
       marginVertical: 20,
       marginHorizontal: '10%',
       borderRadius: 10,
-  }
+  },
+    underline: {
+      width: Dimensions.get("screen").width * 0.8,
+      height: 1,
+      borderBottomWidth: 1,
+      borderBottomColor: 'white',
+  },
   })
