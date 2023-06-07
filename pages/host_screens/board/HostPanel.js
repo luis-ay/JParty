@@ -7,12 +7,13 @@ import { BottomSheetModal} from '@gorhom/bottom-sheet'
 import { JumpingTransition } from 'react-native-reanimated'
 import CheckSVG from "../../../SVGS/CheckSVG"
 import CrossSVG from "../../../SVGS/CrossSVG"
-import BackButtonSVG from "../../../SVGS/BackButtonSVG"
 
 
 const HostPanel = ({panelAmount, modalRef}) => {
     const [amount, setAmt] = useState(panelAmount)
     const [dailyDoubleOn, setDailyDouble] = useState(false)
+    const [leftClicked, setLeftClicked] = useState(false)
+    const [rightClicked, setRightClicked] = useState(false)
     const rebuzz = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
@@ -88,23 +89,19 @@ const HostPanel = ({panelAmount, modalRef}) => {
             </View>
 
             
-            <Pressable style={dailyDoubleOn ? styles.dailyOFFButton : styles.dailyONButton}>
-                <Text style={{fontSize:36, color:'#FFD700'}} onPress={handleDailyDouble}>Daily Double</Text>
+            <Pressable style={dailyDoubleOn ? styles.dailyOFFButton : styles.dailyONButton} onPress={handleDailyDouble}>
+                <Text style={dailyDoubleOn ? styles.dailyTextOff: styles.dailyTextOn} >Daily Double</Text>
             </Pressable>
 
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Pressable onPress={()=>handleCorrect('Luis')}>
-                  <CheckSVG />
+            <View style={styles.cor_incContainer}>
+              <Pressable onPress={()=>handleCorrect('Luis')} style={leftClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setLeftClicked(true)} onPressOut={()=>setLeftClicked(false)}>
+                  <CheckSVG/>
               </Pressable>
-              
-              <Pressable onPress={()=>handleIncorrect('Luis')}>
+              <View style={{width:0,height:'70%',borderColor:'#272B4A', borderWidth:2,}}></View>
+              <Pressable onPress={()=>handleIncorrect('Luis')} style={rightClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setRightClicked(true)} onPressOut={()=>setRightClicked(false)}>
                   <CrossSVG/>
               </Pressable>
             </View>
-
-            <Pressable onPress={() =>  handleClose()}>
-              <Text style={{fontSize:36, color:'white'}}>Back</Text>
-            </Pressable>
             
           </View>
         </BottomSheetModal>
@@ -149,31 +146,59 @@ const HostPanel = ({panelAmount, modalRef}) => {
       textDecorationLine: 'none',
     },
     dailyONButton: {
-      backgroundColor: '#16182A',
-      //borderWidth:2,
+      borderWidth:2,
       alignItems: 'center',
-      //marginTop:Dimensions.get("screen").height * 0.05,
       height: Dimensions.get("screen").height * 0.10,/*padding encroached upon height so made 8.1 to fit Gs*/
       width:  Dimensions.get("screen").width * 0.6,
       borderRadius: 25,
-      //borderColor: '#FFD700',
+      borderColor: '#FFD700',
       justifyContent:'center'
     }, 
     dailyOFFButton: {
-      backgroundColor: '#6A41FF',
-     // borderWidth: 2,
+      borderWidth: 2,
       alignItems: 'center',
       height: Dimensions.get("screen").height * 0.10,/*padding encroached upon height so made 8.1 to fit Gs*/
       width:  Dimensions.get("screen").width * 0.6,
       borderRadius: 25,
-      //borderColor: '#16182A',
+      borderColor: '#6A41FF',
       justifyContent:'center'
-
-  },
+    },
+    dailyTextOn:{
+      fontSize:36,
+      color:'#FFD700'
+    },
+    dailyTextOff:{
+      fontSize:36,
+      color:'white'
+    },
     underline: {
       width: Dimensions.get("screen").width * 0.8,
       height: 1,
       borderBottomWidth: 1,
       borderBottomColor: 'white',
-  },
+    },
+    cor_incContainer: {
+      flexDirection: 'row', 
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      backgroundColor: '#16182A',
+      width: '70%',
+      height: '15%',
+      marginVertical: '10%',
+      borderRadius: 10
+    },
+    svgContainer: {
+      width:'49%',
+      height:'100%', 
+      alignItems:'center', 
+      justifyContent:'center',
+      backgroundColor: '#6A41FF',
+      borderRadius:10
+    },
+    svgContainerOff: {
+      width:'49%',
+      height:'100%', 
+      alignItems:'center', 
+      justifyContent:'center',
+    }
   })
