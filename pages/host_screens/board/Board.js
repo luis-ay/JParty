@@ -68,6 +68,17 @@ const Board = ({navigation}) => {
           ]);
     }
 
+    const finalJPartyAlert = () => {
+        Alert.alert('Warning', 'Moving on to Final J!Party', [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => navigation.navigate('FinalJPartyControl')},
+          ]);
+    }
+
     const bottomSheetModalRef = useRef(null) //used for referencing modal during open/close
 
   return (
@@ -94,7 +105,7 @@ const Board = ({navigation}) => {
                     
                 <View style={styles.JButtonContainer}>
                 
-                    <Pressable onPress={() => navigation.navigate('FinalJPartyControl')} style={styles.finalJButton}>
+                    <Pressable onPress={() => finalJPartyAlert()} style={styles.finalJButton}>
                         <Text style={styles.finalJeopardyTextColor}>FINAL</Text>
                         <View style={styles.FinalJeopardyUnderline}></View>
                         <Text style={styles.finalJeopardyTextColor}>J ! PARTY</Text>
