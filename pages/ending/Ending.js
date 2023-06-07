@@ -1,21 +1,29 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { selectAllScores, selectSortedScores } from '../../features/gameSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addGame, selectAllScores, selectMatchHistory, selectSortedScores } from '../../features/gameSlice'
 import { useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native'
 
 const Ending = ({navigation}) => {
     const storedScores = useSelector(selectAllScores)
     let sortedScores = useSelector(selectSortedScores)
+    const matchHistory = useSelector(selectMatchHistory)
     const [scores, setScores] = useState(sortedScores)
     const isFocused = useIsFocused()
+    const dispatch = useDispatch()
     useEffect(()=> {
         if (isFocused) {
             setScores(sortedScores)
         }
     },[storedScores,isFocused])
+
+    const handleGameEnd = () => {
+        dispatch(addGame())
+        // console.log(`current matchHistory ${}`)
+    }
+
 
   return (
     <View style={styles.container}>

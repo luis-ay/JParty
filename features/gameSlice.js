@@ -2,9 +2,10 @@ import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
     name: 'Enter Name',
+    date: {'year':2023,'month':6,'day':6 },
     host: false,
     rebuzz: true,
-    deductions: false,
+    deductions: true,
     scores: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
     finalJParty:  {'Timmy':'Deez', 'Luis':'nutz', 'Bob':'bofa','A':'2000', 'B':'1500', 'C':'600'},
     finalJPartyWagers: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
@@ -73,7 +74,11 @@ const gameSlice = createSlice({
         state.finalJPartyWagers = initialState.finalJPartyWagers
     },
     addGame: (state) => {
-        state.matchHistory = [...state.matchHistory, state.scores]
+        state.matchHistory = [...state.matchHistory, {date: state.date, scores: state.scores}]
+    },
+    changeDate: (state) => {
+        const newDate = new Date()
+        state.date = {'year':newDate.getFullYear(), 'month':newDate.getMonth()+1, 'day':newDate.getDate()}
     }
   },
 });
@@ -82,7 +87,7 @@ const gameSlice = createSlice({
 
 
 
-export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager, addGame } = gameSlice.actions;
+export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager, addGame, changeDate } = gameSlice.actions;
 export const selectAllScores = (state) => state.game.scores;
 export const selectFinalAnswers = (state) => state.game.finalJParty;
 export const selectGameMode = (state) => state.game.rebuzz;

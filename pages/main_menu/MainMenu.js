@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native'
 import React from 'react'
-import { addContestant, makeHost } from '../../features/gameSlice'
+import { addContestant, changeDate, makeHost } from '../../features/gameSlice'
 import { useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { clearGame } from '../../features/gameSlice'
@@ -9,12 +9,16 @@ import { clearGame } from '../../features/gameSlice'
 const MainMenu = ({navigation}) => {
   
   const dispatch = useDispatch()
+
   const handleHostPress =() => {
     dispatch(makeHost(true))
+    
     dispatch(addContestant('Tim'))
     dispatch(addContestant('Luis'))
     dispatch(addContestant('Bob'))
+    
     navigation.navigate('Board')
+    dispatch(changeDate())
   }
 
   const handleJoinPress=()=> {
@@ -27,6 +31,7 @@ const MainMenu = ({navigation}) => {
     AsyncStorage.getAllKeys()
         .then(keys => AsyncStorage.multiRemove(keys))
         .then(() => alert('success'));
+    navigation.navigate('History')
   }
 
   return (

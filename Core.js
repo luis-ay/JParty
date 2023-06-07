@@ -13,7 +13,7 @@ import FinalJPartyControl from './pages/host_screens/finalJparty/FinalJPartyCont
 import Waiting from './pages/contestant_screens/Waiting';
 import Wager from './pages/contestant_screens/Wager';
 import Ending from './pages/ending/Ending';
-
+import GameHistory from './pages/main_menu/GameHistory'
 
 
 enableScreens()
@@ -39,6 +39,7 @@ const Core = () => {
           <Stack.Screen name ='Waiting' component={Waiting} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='Wager' component={Wager} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='Ending' component={Ending} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='History' component={GameHistory} options={{gestureEnabled: false}}/>
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>

@@ -112,7 +112,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
   
   const styles = StyleSheet.create({
     container: {
-          backgroundColor: '#5f68b8',
+      backgroundColor: '#6A41FF',
     },
     modalContentContainer: {
       flex: 1,
@@ -146,22 +146,26 @@ const HostPanel = ({panelAmount, modalRef}) => {
       textDecorationLine: 'none',
     },
     dailyONButton: {
-      backgroundColor: '#16182A',
-      borderWidth:2,
+      backgroundColor: '#6A41FF',
+      borderWidth:4,
       alignItems: 'center',
       //marginTop:Dimensions.get("screen").height * 0.05,
-      height: Dimensions.get("screen").height * 0.15,/*padding encroached upon height so made 8.1 to fit Gs*/
+      height: Dimensions.get("screen").height * 0.10,/*padding encroached upon height so made 8.1 to fit Gs*/
       width:  Dimensions.get("screen").width * 0.6,
       borderRadius: 25,
       borderColor: '#FFD700',
       justifyContent:'center'
-  }, 
+    }, 
     dailyOFFButton: {
-      backgroundColor: '#2a1a66',
+      backgroundColor: '#6A41FF',
+      borderWidth: 4,
       alignItems: 'center',
-      marginVertical: 20,
-      marginHorizontal: '10%',
-      borderRadius: 10,
+      height: Dimensions.get("screen").height * 0.10,/*padding encroached upon height so made 8.1 to fit Gs*/
+      width:  Dimensions.get("screen").width * 0.6,
+      borderRadius: 25,
+      borderColor: '#16182A',
+      justifyContent:'center'
+
   },
     underline: {
       width: Dimensions.get("screen").width * 0.8,
