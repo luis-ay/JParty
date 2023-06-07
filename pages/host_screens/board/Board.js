@@ -18,7 +18,6 @@ const Board = ({navigation}) => {
 
     const [scores, setScores] = useState(storedScores)
     const rebuzz = useRef(storedRebuzz)
-    const deductions = useRef(storedDeductions)
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
     const [panelAmt, setPanelAmt] = useState(0)
@@ -75,19 +74,16 @@ const Board = ({navigation}) => {
                     
                 <View style={styles.JButtonContainer}>
                 
-                    <View style={styles.finalJButton}>
-                        <Pressable onPress={() => navigation.navigate('FinalJPartyControl')}>
-                            <Text style={{fontSize:36, color:'white'}}>    FINAL</Text>
-                            <View style={styles.FinalJeopardyUnderline}></View>
-                            <Text style={{fontSize:36, color:'white'}}>J ! PARTY </Text>
-                        </Pressable>
-                        
-                    </View>
-            
+                    <Pressable onPress={() => navigation.navigate('FinalJPartyControl')} style={styles.finalJButton}>
+                        <Text style={styles.finalJeopardyTextColor}>FINAL</Text>
+                        <View style={styles.FinalJeopardyUnderline}></View>
+                        <Text style={styles.finalJeopardyTextColor}>J ! PARTY</Text>
+                    </Pressable>
+                    
                     <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
-                        <Text  style={{fontSize:36, color:'#FFD700'}}> DOUBLE</Text>
+                        <Text  style={styles.doubleJeopardyTextColor}>DOUBLE</Text>
                         <View style={styles.DoubleJeopardyUnderline}></View>
-                        <Text  style={{fontSize:36, color:'#FFD700'}}> J ! PARTY</Text>
+                        <Text  style={styles.doubleJeopardyTextColor}>J ! PARTY</Text>
                     </Pressable>
                     
                 </View>
@@ -141,7 +137,7 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
     },
     scoresContainer: {
-        margin: '2%',
+        margin: '5%',
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between'
@@ -176,7 +172,7 @@ const styles = StyleSheet.create({
         paddingVertical:'5%',
         paddingHorizontal:'2%',
         borderRadius:25,
-        textAlign:'center',
+        justifyContent: 'center'
     },    
     doubleJeopardyButton: {
         borderWidth:4,
@@ -185,7 +181,7 @@ const styles = StyleSheet.create({
         paddingVertical:'5%',
         paddingHorizontal:'2%',
         borderRadius: 25,
-        textAlign:'center',
+        justifyContent: 'center'
     },
     singleJeopardyButton: {
         borderWidth:4,
@@ -198,19 +194,23 @@ const styles = StyleSheet.create({
     },
     doubleJeopardyTextColor: {
         color:'#FFD700',
-        textAlign:'center',
-        fontSize: 32,
+        fontSize: 22,
+        marginVertical: '2%'
+    },
+    finalJeopardyTextColor: {
+        color: 'white',
+        fontSize: 22,
+        marginVertical: '2%'
     },
     DoubleJeopardyUnderline: {
-        width: Dimensions.get("screen").width * 0.3,
+        width: Dimensions.get("screen").width * 0.20,
         height: 1,
         borderBottomWidth: 1,
         borderBottomColor: 'white',
     },
     FinalJeopardyUnderline: {
-         width: Dimensions.get("screen").width * 0.3,
+        width: Dimensions.get("screen").width * 0.2,
         height: 1,
-        marginLeft:Dimensions.get("screen").width * 0.055,
         borderBottomWidth: 1,
         borderBottomColor: 'white',
     },

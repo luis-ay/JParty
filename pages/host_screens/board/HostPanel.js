@@ -84,9 +84,10 @@ const HostPanel = ({panelAmount, modalRef}) => {
               <Text style={styles.money}>${amount}</Text>
             </View>
 
-            <Pressable style={dailyDoubleOn? styles.dailyOFFButton : styles.dailyONButton}>
+            
+            <Pressable style={dailyDoubleOn ? styles.dailyOFFButton : styles.dailyONButton}>
                 <Text style={{fontSize:36, color:'#FFD700'}} onPress={handleDailyDouble}>Daily Double</Text>
-              </Pressable>
+            </Pressable>
 
             <View style={{flexDirection: 'row', marginBottom:20}}>
          
