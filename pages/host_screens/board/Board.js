@@ -81,9 +81,9 @@ const Board = ({navigation}) => {
                     </Pressable>
                     
                     <Pressable onPress={handleDoublePress} style={double? styles.singleJeopardyButton : styles.doubleJeopardyButton}>
-                        <Text  style={styles.doubleJeopardyTextColor}>DOUBLE</Text>
+                        <Text  style={double ? styles.doubleJeopardyOffTextColor:styles.doubleJeopardyOnTextColor}> DOUBLE</Text>
                         <View style={styles.DoubleJeopardyUnderline}></View>
-                        <Text  style={styles.doubleJeopardyTextColor}>J ! PARTY</Text>
+                        <Text  style={double ? styles.doubleJeopardyOffTextColor:styles.doubleJeopardyOnTextColor}> J ! PARTY</Text>
                     </Pressable>
                     
                 </View>
@@ -192,8 +192,13 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         textAlign:'center',
     },
-    doubleJeopardyTextColor: {
+    doubleJeopardyOnTextColor: {
         color:'#FFD700',
+        fontSize: 22,
+        marginVertical: '2%'
+    },
+    doubleJeopardyOffTextColor: {
+        color:'#6A41FF',
         fontSize: 22,
         marginVertical: '2%'
     },
