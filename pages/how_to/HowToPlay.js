@@ -2,11 +2,19 @@ import { StyleSheet, Text, View, Pressable, Dimensions, ScrollView, useWindowDim
 import React from 'react'
 import QuizSVG from "./QuizSVG"
 import WifiSVG from "./WifiSVG"
+import BackButtonSVG from '../../SVGS/BackButtonSVG'
 
 const { width, height } = Dimensions.get('window')
 const HowToPlay = ({navigation}) => {
   return (
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer}>
+        
+        <View style={styles.backButtonContainer}>
+          <Pressable onPress={() => navigation.navigate('Main')}>
+            <BackButtonSVG/>
+          </Pressable>
+        </View>
+
         <Text style={styles.logo}>HOW TO PLAY<Text style={styles.logoColor}>!</Text></Text>
 
         <Text style={styles.sectionTitle}>Overview</Text>
@@ -44,9 +52,7 @@ const HowToPlay = ({navigation}) => {
         <View style={styles.underline}></View>
         <Text style={styles.sectionInfo}>By disabling deductions, players can enjoy the game without the stressor of losing points for incorrect answers.</Text>
 
-        <Pressable onPress={() => navigation.navigate('Main')}>
-          <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
-        </Pressable>
+        
 
       </ScrollView>
   )
@@ -93,10 +99,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#6A41FF',
   },
+  backButtonContainer: {
+    width: '100%',
+    marginHorizontal:'1%',
+    marginVertical:'-4%',
+    justifyContent:'flex-start',
+  },
   logo:{
     fontSize:60,
     color:'white',
-    marginVertical:'10%',
+    marginVertical:'3%',
     fontWeight:'700',
     textAlign: 'center',
   },

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearMatchHistory, selectMatchHistory } from '../../features/gameSlice'
 import { useIsFocused } from '@react-navigation/native'
+import BackButtonSVG from '../../SVGS/BackButtonSVG'
 
 const GameHistory = ({navigation}) => {
   const storedMatchHistory = useSelector(selectMatchHistory)
@@ -20,8 +21,17 @@ const GameHistory = ({navigation}) => {
 
 
   return (
+
+    
     <View style={styles.screen}>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer}>
+
+        <View style={styles.backButtonContainer}>
+          <Pressable onPress={() => navigation.navigate('Main')}>
+            <BackButtonSVG/>
+          </Pressable>
+        </View>
+
         <Text style={{color:'white'}}>GameHistory: Timmy been GAy</Text>
         <View>
           {matchHistory.map((match, idx) => 
@@ -34,9 +44,7 @@ const GameHistory = ({navigation}) => {
         <Pressable onPress={() => dispatch(clearMatchHistory())}>
               <Text style={{fontSize:36, color:'white'}}>Clear Match History</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('Main')}>
-              <Text style={{fontSize:36, color:'white'}}>Back</Text>
-        </Pressable>
+        
       </ScrollView>
     </View>
   )
@@ -55,6 +63,12 @@ const styles = StyleSheet.create({
   scrollcontainer: {
     paddingBottom: 1000, ///This is very important for scrolling to the bottom, adjust as needed
     alignItems: 'center'
+  },
+  backButtonContainer: {
+    width: '100%',
+    marginHorizontal:'1%',
+    marginVertical:'3%',
+    justifyContent:'flex-start',
   },
   logo:{
     fontSize:36,

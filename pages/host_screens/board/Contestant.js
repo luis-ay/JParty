@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addScore, subScore } from '../../../features/gameSlice'
+import AddSvg from '../../../SVGS/AddSVG'
+import SubSvg from '../../../SVGS/SubSVG'
 
 const { width, height } = Dimensions.get('window')
 const Contestant = ({contestant, currscore, type}) => {
@@ -30,11 +32,11 @@ const Contestant = ({contestant, currscore, type}) => {
         {updating && 
             <View style={styles.add_sub}>
                 <Pressable onPress={handleAdd}>
-                    <Text style={styles.addText}>Add</Text>
+                    <AddSvg/>
                 </Pressable>
-                <View style={{width:0,borderColor:'#6a41ff', borderRightWidth: 2}}></View>
+                <View style={{width:0,height:'100%',borderColor:'#6a41ff', borderWidth:1,}}></View> 
                 <Pressable onPress={handleSub}>
-                    <Text style={styles.addText}>Sub</Text>
+                    <SubSvg/>
                 </Pressable>
             </View>
         }
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%',
         justifyContent: 'space-evenly',
-        // alignItems: 'center',
+        alignItems:'center',
         borderColor: '#6a41ff',
         borderWidth: 2,
         borderLeftWidth:0,

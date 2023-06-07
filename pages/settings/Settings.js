@@ -3,6 +3,7 @@ import React,{useEffect, useState} from 'react'
 import { changeGameMode, changeDeductions, selectGameMode, selectDeductions } from '../../features/gameSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
+import BackButtonSVG from '../../SVGS/BackButtonSVG'
 
 
 const Settings = ({navigation}) => {
@@ -29,6 +30,13 @@ const Settings = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      <View style={styles.backButtonContainer}>
+        <Pressable onPress={() => navigation.navigate('Main')}>
+          <BackButtonSVG/>
+        </Pressable>
+      </View>
+
       <Text style={styles.logo}>SETTINGS<Text style={styles.logoColor}>!</Text></Text>
       
       <View style={styles.optionContainer}>
@@ -85,11 +93,6 @@ const Settings = ({navigation}) => {
 
       <View style={styles.underline}></View>
 
-
-      <Pressable onPress={() => navigation.navigate('Main')}>
-        <Text style={{fontSize:36, color:'white'}}>Back</Text>
-      </Pressable>
-
     </SafeAreaView>
   )
 }
@@ -111,6 +114,12 @@ const styles = StyleSheet.create({
     fontSize:36,
     color:'white',
     fontWeight:'700',
+  },
+  backButtonContainer: {
+    marginTop: '8%',
+    width: '100%',
+    marginHorizontal:'1%',
+    justifyContent:'flex-start',
   },
   optionContainer:
   {

@@ -8,7 +8,7 @@ import { useIsFocused } from '@react-navigation/native'
 import HostPanel from './HostPanel'
 import { BottomSheetModalProvider, BottomSheetModal } from '@gorhom/bottom-sheet'
 import Contestant from './Contestant'
-
+import BackButtonSVG from '../../../SVGS/BackButtonSVG'
 
 
 const Board = ({navigation}) => {
@@ -88,17 +88,18 @@ const Board = ({navigation}) => {
 
             <ScrollView style={styles.container} contentContainerStyle={styles.scrollcontainer} alwaysBounceVertical={false}>
                 
-            <View style={styles.backAndEndContainer}>
+                <View style={styles.backAndEndContainer}>
                     <Pressable onPress={()=> endGameAlert()}>
                         <Text style={styles.endGameText}>End Game</Text>
+                        <View style={styles.endGameUnderline}></View>
                     </Pressable>
                     
                     <Pressable onPress={() => navigation.navigate('Main')}>
-                        <Text style={{fontSize:25, color:'white',marginRight: Dimensions.get("screen").height * 0.225}}>Back</Text>
+                        <BackButtonSVG/>
                     </Pressable>
-            </View>
+                </View>
 
-            <View style={styles.endGameUnderline}></View>
+            
 
                 <Text style={styles.logo}>GAME<Text style={styles.logoColor}>!</Text>BOARD</Text>
                 
@@ -118,9 +119,7 @@ const Board = ({navigation}) => {
                     </Pressable>
                     
                 </View>
-                
-                
-
+                               
                 <View style={styles.categoriesContainer}>
                     {values.map(val => <Category key={val} value={val} answerCount={0} modalOpenRef={bottomSheetModalRef} panelAmountCall={panelAmountCall} />)}
                 </View>
@@ -188,6 +187,9 @@ const styles = StyleSheet.create({
     backAndEndContainer:{
         flexDirection:'row-reverse',
         marginTop: Dimensions.get("screen").height * 0.08,
+        justifyContent:'space-between',
+        marginHorizontal:'1%',
+        alignItems: 'center'
     },
     JButtonContainer: {     
         flexWrap:'wrap',
@@ -251,10 +253,8 @@ const styles = StyleSheet.create({
         borderBottomColor: 'white',
     },
     endGameUnderline: {
-        width: Dimensions.get("screen").width * 0.30,
-        marginLeft:Dimensions.get("screen").width * 0.665,
         height: 1,
-        alignContent:'flex-end',
+        width:'90%',
         borderBottomWidth: 1,
         borderBottomColor: 'white',
     },
