@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
         marginVertical: '2%'
     },
     doubleJeopardyOffTextColor: {
-        color:'#6A41FF',
+        color:'white',
         fontSize: 22,
         marginVertical: '2%'
     },
