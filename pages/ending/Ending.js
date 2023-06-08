@@ -28,7 +28,12 @@ const Ending = ({navigation}) => {
   return (
     <View style={styles.container}>
         <Text style={styles.logo}>Final<Text style={styles.logoColor}>J!</Text>Party</Text>
-        <Text style={{color: 'white', fontSize:36}}>Final Scores</Text>
+
+        <View>
+            <Text style={{color: 'white', fontSize:30}}>FINAL SCORES</Text>
+            <View style={{borderColor:'#6A41FF', borderBottomWidth: 1, marginBottom:'5%'}}></View>
+        </View>
+
         <View style={{alignItems: 'center'}}>
             <Text style={styles.firstPlace}>1. {scores[0][0]} ${scores[0][1]}</Text>
             <Text style={styles.secondPlace}>2. {scores[1][0]} ${scores[1][1]}</Text>
@@ -39,7 +44,8 @@ const Ending = ({navigation}) => {
         </View>
         <Text style={styles.thanks}>THANKS FOR PLAYING J!PARTY!!</Text>
         <Pressable onPress={() => handleGameEnd()}>
-            <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+            <Text style={{fontSize:32, color:'white'}}>Main Menu</Text>
+            <View style={{borderColor:'#6A41FF', borderBottomWidth: 1}}></View>
         </Pressable>
     </View>
   )
@@ -52,13 +58,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#16182A',
         height: '100%',
         alignItems: 'center',
-        justifyContent: 'space-evenly'
     },
     logo:{
-        fontSize:36,
+        fontSize:46,
         color:'white',
-        marginVertical:'10%',
+        marginTop:'20%',
         fontWeight:'700',
+        marginBottom: '10%'
     },
     logoColor: {
         color: '#6A41FF',
@@ -67,20 +73,21 @@ const styles = StyleSheet.create({
     firstPlace: {
         color:'#FFD700',
         fontSize: 62,
-        marginBottom: '4%'
+        marginBottom: '2%'
     },
     secondPlace: {
         color: 'white',
         fontSize: 42,
-        marginBottom: '5%'
+        marginBottom: '2%'
     },
     thirdPlace: {
         color: 'white',
         fontSize: 30,
-        marginBottom: '2%'
+        marginBottom: '1%'
     },
     thanks: {
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        marginVertical: '15%'
     }
 })

@@ -14,7 +14,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
     const [dailyDoubleOn, setDailyDouble] = useState(false)
     const [leftClicked, setLeftClicked] = useState(false)
     const [rightClicked, setRightClicked] = useState(false)
-    const rebuzz = useSelector(selectGameMode)
+    const mode = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
 
@@ -53,7 +53,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
     }
     const handleCorrect = (contestant) => { 
         /////////////////////////////////// LUIS IS HARDCODED FOR NOW ///////////////////////////////////////////////////////////
-        //needs to check for rebuzzz
+        //needs to check game mode at call location
         console.log(`${contestant} scored and got ${amount} points added.`)
         dispatch(addScore({contestant:contestant, amount:amount}))
         handleClose()

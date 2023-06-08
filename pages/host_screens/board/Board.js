@@ -15,11 +15,10 @@ const Board = ({navigation}) => {
 
     const storedScores = useSelector(selectAllScores)
     const storedDeductions = useSelector(selectDeductions)
-    const storedRebuzz = useSelector(selectGameMode)
+    const storedMode = useSelector(selectGameMode)
     const storedSortedScores = useSelector(selectSortedScores)
     const [sortedScores, setSortedScores] = useState(storedSortedScores)
     const [scores, setScores] = useState(storedScores)
-    const rebuzz = useRef(storedRebuzz)
     const [double, setDouble] = useState(false)
     const [values, setValues] = useState([200,400,600,800,1000])
     const [panelAmt, setPanelAmt] = useState(0)

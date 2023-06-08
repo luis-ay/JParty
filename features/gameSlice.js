@@ -4,7 +4,7 @@ const initialState = {
     name: 'Enter Name',
     date: {'year':2023,'month':6,'day':6 },
     host: false,
-    rebuzz: true,
+    mode: 0,
     deductions: true,
     scores: {'Timmy':500, 'Luis':300, 'Bob':400, 'A':2000, 'B':1500, 'C':600},
     finalJParty:  {'Timmy':'Deez', 'Luis':'nutz', 'Bob':'bofa','A':'2000', 'B':'1500', 'C':'600'},
@@ -61,8 +61,8 @@ const gameSlice = createSlice({
         console.log(state.finalJPartyWagers)
     },
     changeGameMode: (state, action) => {
-        const rebuzzSetting = action.payload //only need rebuzzSetting bc only one (rebuzz/pass) can be true at a given time
-        state.rebuzz = rebuzzSetting
+        const newMode = action.payload //0: freeforall, 1: rebuzz, 2: quickshift
+        state.mode = newMode
     },
     changeDeductions: (state, action) => {
         const deductionsSetting = action.payload //payload is true/false for allow deductions
@@ -95,7 +95,7 @@ const gameSlice = createSlice({
 export const { addContestant, makeHost, addScore, subScore, changeDeductions, changeGameMode, addFinalAnswer, clearGame, changeName, addWager, addGame, changeDate, clearMatchHistory } = gameSlice.actions;
 export const selectAllScores = (state) => state.game.scores;
 export const selectFinalAnswers = (state) => state.game.finalJParty;
-export const selectGameMode = (state) => state.game.rebuzz;
+export const selectGameMode = (state) => state.game.mode;
 export const selectDeductions = (state) => state.game.deductions;
 export const selectMatchHistory = (state) => state.game.matchHistory
 export const selectName = (state) => state.game.name

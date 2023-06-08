@@ -10,19 +10,30 @@ const Settings = ({navigation}) => {
   // Need to set component state to whats persisted in the store, need to use selectors
 
   const dispatch = useDispatch()
-  const storeRebuzz = useSelector(selectGameMode)
+  const storedMode = useSelector(selectGameMode)
   const storeDeductions = useSelector(selectDeductions)
 
-  const [rebuzz, setReBuzz] = useState(storeRebuzz)
-  const [quickPass, setQuickPass] = useState(!storeRebuzz)
+  const [mode, setMode] = useState(storedMode)
   const [deductions, setDeductions] = useState(storeDeductions)
 
 
-  const toggleMode = () => {
-    dispatch(changeGameMode(!rebuzz))
-    setReBuzz(!rebuzz)
-    setQuickPass(!rebuzz ? false : true)
+  const toggleMode = (modeInt) => {
+    if (modeInt == mode) {
+      if (modeInt + 1 < 3) {
+        dispatch(changeGameMode(modeInt + 1))
+        setMode(modeInt + 1)
+      }
+      else {
+        dispatch(changeGameMode(0))
+        setMode(0)
+      }
+    }
+    else {
+      dispatch(changeGameMode(modeInt))
+      setMode(modeInt)
+    }
   }
+
   const toggleDeductions = () => {
     dispatch(changeDeductions(!deductions))
     setDeductions(!deductions)
@@ -44,7 +55,8 @@ const Settings = ({navigation}) => {
         <Switch
           trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
           thumbColor={'#FFF'}
-
+          value={mode==0}
+          onValueChange={()=>toggleMode(0)}
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
@@ -57,8 +69,8 @@ const Settings = ({navigation}) => {
         <Switch
           trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
           thumbColor={'#FFF'}
-          onValueChange={toggleMode}
-          value={rebuzz}
+          onValueChange={()=>toggleMode(1)}
+          value={mode==1}
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
@@ -71,8 +83,8 @@ const Settings = ({navigation}) => {
         <Switch
           trackColor={{false:'#aeb1c2', true:'#6A41FF'}}
           thumbColor={'#FFF'}
-          onValueChange={toggleMode}
-          value={quickPass}
+          onValueChange={()=>toggleMode(2)}
+          value={mode==2}
           style={{ transform:[{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
         />
       </View>
