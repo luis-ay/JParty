@@ -4,7 +4,6 @@ import { selectDeductions, selectGameMode, subScore } from '../../../features/ga
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { addScore } from '../../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
-import { JumpingTransition } from 'react-native-reanimated'
 import CheckSVG from "../../../SVGS/CheckSVG"
 import CrossSVG from "../../../SVGS/CrossSVG"
 

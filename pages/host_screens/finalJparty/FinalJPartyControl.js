@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Dimensions } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -8,7 +8,7 @@ import ContestantScore from './ContestantScore'
 import { useIsFocused } from '@react-navigation/native'
 import Answer from './Answer'
 
-
+const { width, height } = Dimensions.get('window')
 const FinalJPartyControl = ({navigation}) => {
 
   const storedScores = useSelector(selectAllScores)
@@ -56,7 +56,10 @@ const FinalJPartyControl = ({navigation}) => {
 
         {answersReady && 
         <View>
+
+          
           <Text style={{color: 'white'}}>Final Answers</Text>
+
           <View style={styles.answersContainer}>
             {Object.entries(wagers).map(entry => <Answer key={entry[0]} contestant={entry[0]} wager={entry[1]} answer={answers[entry[0]]}/>)}
           </View>
