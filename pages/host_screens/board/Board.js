@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable, ScrollView, Alert } from 'react-nati
 import { Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { selectAllScores, selectDeductions, selectGameMode, addGame , clearGame } from '../../../features/gameSlice'
+import { selectAllScores, selectDeductions, selectGameMode, addGame , clearGame, selectSortedScores } from '../../../features/gameSlice'
 import Category from './Category'
 import { useIsFocused } from '@react-navigation/native'
 import HostPanel from './HostPanel'
@@ -16,7 +16,8 @@ const Board = ({navigation}) => {
     const storedScores = useSelector(selectAllScores)
     const storedDeductions = useSelector(selectDeductions)
     const storedRebuzz = useSelector(selectGameMode)
-
+    const storedSortedScores = useSelector(selectSortedScores)
+    const [sortedScores, setSortedScores] = useState(storedSortedScores)
     const [scores, setScores] = useState(storedScores)
     const rebuzz = useRef(storedRebuzz)
     const [double, setDouble] = useState(false)
@@ -29,6 +30,7 @@ const Board = ({navigation}) => {
     useEffect(()=> {
         if (isFocused) {
             setScores(storedScores)
+            setSortedScores(storedSortedScores)
         }
       },[isFocused, storedScores])
 
@@ -52,7 +54,7 @@ const Board = ({navigation}) => {
     }
 
     const handleGameEnd = () => {
-        dispatch(addGame())
+        dispatch(addGame(sortedScores))
         dispatch(clearGame())
         navigation.navigate('Main')
     }

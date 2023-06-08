@@ -19,7 +19,7 @@ const Ending = ({navigation}) => {
     },[storedScores,isFocused])
 
     const handleGameEnd = () => {
-        dispatch(addGame())
+        dispatch(addGame(scores))
         dispatch(clearGame())
         navigation.navigate('Main')
     }

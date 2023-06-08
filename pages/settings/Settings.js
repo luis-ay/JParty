@@ -101,9 +101,8 @@ export default Settings
 
 const styles = StyleSheet.create({
   logo:{
-    fontSize:60,
+    fontSize:50,
     color:'white',
-    marginVertical:'10%',
     fontWeight:'700'
   },
   logoColor: {
@@ -116,7 +115,6 @@ const styles = StyleSheet.create({
     fontWeight:'700',
   },
   backButtonContainer: {
-    marginTop: '8%',
     width: '100%',
     marginHorizontal:'1%',
     justifyContent:'flex-start',

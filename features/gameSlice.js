@@ -73,8 +73,9 @@ const gameSlice = createSlice({
         state.finalJParty = initialState.finalJParty
         state.finalJPartyWagers = initialState.finalJPartyWagers
     },
-    addGame: (state) => {
-        state.matchHistory = [...state.matchHistory, {date: state.date, scores: state.scores}]
+    addGame: (state, action) => {
+        const sortedScores = action.payload
+        state.matchHistory = [...state.matchHistory, {date: state.date, scores: sortedScores}]
         console.log(`matchHistory: ${JSON.stringify(state.matchHistory)}`)
     },
     changeDate: (state) => {

@@ -39,7 +39,7 @@ const Core = () => {
           <Stack.Screen name ='Waiting' component={Waiting} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='Wager' component={Wager} options={{gestureEnabled: false}}/>
           <Stack.Screen name ='Ending' component={Ending} options={{gestureEnabled: false}}/>
-          <Stack.Screen name ='History' component={GameHistory} options={{gestureEnabled: false}}/>
+          <Stack.Screen name ='History' component={GameHistory}/>
           
         </Stack.Navigator>
         <StatusBar barStyle={'light-content'}/>

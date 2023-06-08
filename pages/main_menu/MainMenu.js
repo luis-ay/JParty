@@ -33,36 +33,46 @@ const MainMenu = ({navigation}) => {
     //     .then(() => alert('success'));
     navigation.navigate('History')
   }
+  
+  const handleSettings = () => {
+    dispatch(clearGame())
+    AsyncStorage.getAllKeys()
+        .then(keys => AsyncStorage.multiRemove(keys))
+        .then(() => alert('success'));
+    navigation.navigate('Settings')
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.screen}>
       <Text style={styles.logo}>J<Text style={styles.logoColor}>!</Text>PARTY</Text>
-      <Pressable style={styles.menuButtonOutline} onPress = {()=> navigation.navigate('HowTo')}>
-        <Text style={styles.menuButtonText}>
-          {`How To Play`}
-        </Text>
-      </Pressable>
-      <Pressable style={styles.menuButtonOutline} onPress = {handleHostPress}>
-        <Text style={styles.menuButtonText}>
-          {`Host Game`}
-        </Text>
-      </Pressable>
-      <Pressable style={styles.menuButtonOutline} onPress = {handleJoinPress}>
-        <Text style={styles.menuButtonText}>
-          {`Join Game`}
-        </Text>
-      </Pressable>
-      <Pressable style={styles.menuButtonOutline} onPress = {()=> navigation.navigate('Settings')}>
-        <Text style={styles.menuButtonText}>
-          {`Settings`}
-        </Text>
-      </Pressable>
-      <Pressable style={styles.menuButtonOutline} onPress={handleGameHistory}>
-        <Text style={styles.menuButtonText}>
-          {`Match History`}
-        </Text>
-      </Pressable>
-      <Text style={styles.review}>If you liked our app, please consider leaving a review</Text>
+      <View style={styles.container}>
+          <Pressable style={styles.menuButtonOutline} onPress = {()=> navigation.navigate('HowTo')}>
+            <Text style={styles.menuButtonText}>
+              {`How To Play`}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.menuButtonOutline} onPress = {handleHostPress}>
+            <Text style={styles.menuButtonText}>
+              {`Host Game`}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.menuButtonOutline} onPress = {handleJoinPress}>
+            <Text style={styles.menuButtonText}>
+              {`Join Game`}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.menuButtonOutline} onPress = {handleSettings}>
+            <Text style={styles.menuButtonText}>
+              {`Settings`}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.menuButtonOutline} onPress={handleGameHistory}>
+            <Text style={styles.menuButtonText}>
+              {`Match History`}
+            </Text>
+          </Pressable>
+      </View>
+      <Text style={styles.review}>If you liked our app, please consider leaving a review.</Text>
     </View>
       
   )
@@ -74,23 +84,26 @@ const styles = StyleSheet.create({
   logo:{
     fontSize:60,
     color:'white',
-    marginVertical:'10%',
+    marginTop:'22%',
+    marginBottom: '16%',
     fontWeight:'700',
   },
   logoColor: {
     color: '#6A41FF',
     textDecorationLine: 'none',
   },
-  container: {
-    flex: 1,
+  screen: {
     backgroundColor: '#16182A',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    maxHeight:'100%',
-  },
-  menuButtonText: {
     width: '100%',
     height: '100%',
+    alignItems: 'center',
+  },
+  container: {
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%'
+  },
+  menuButtonText: {
     textAlign: 'center',
     letterSpacing: 1.96,
     fontSize: 14,
@@ -99,12 +112,16 @@ const styles = StyleSheet.create({
   },
   menuButtonOutline: {  
     width: '70%',
-    height: '8.1%',/*padding encroached upon height so made 8.1 to fit Gs*/
-    borderWidth:4,
+    height: '12%',/*padding encroached upon height so made 8.1 to fit Gs*/
+    borderWidth: 2,
     borderColor:'#6A41FF',
-    padding:'5%',/*button inside padding*/
+    alignContent: 'center',
+    justifyContent: 'center'
   },
   review: {
-    color: '#aeb1c2'
+    color: '#aeb1c2',
+    width: '60%',
+    textAlign: 'center',
+    marginTop: '2%'
   }
 })
