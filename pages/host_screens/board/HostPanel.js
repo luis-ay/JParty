@@ -6,6 +6,7 @@ import { addScore } from '../../../features/gameSlice'
 import { BottomSheetModal} from '@gorhom/bottom-sheet'
 import CheckSVG from "../../../SVGS/CheckSVG"
 import CrossSVG from "../../../SVGS/CrossSVG"
+import BuzzIn from './BuzzIn'
 
 
 const HostPanel = ({panelAmount, modalRef}) => {
@@ -21,7 +22,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
       setAmt(panelAmount)
     },[panelAmount])
 
-    const snapPoints = useMemo(()=> ['10%','25%','50%','75%'],[])
+    const snapPoints = useMemo(()=> ['10%','25%','50%','78%'],[])
     
       // callbacks
     const handleSheetChanges = useCallback((index) => {
@@ -66,7 +67,6 @@ const HostPanel = ({panelAmount, modalRef}) => {
       }
     }
 
-
   return (
         <BottomSheetModal
           ref={modalRef}
@@ -79,9 +79,13 @@ const HostPanel = ({panelAmount, modalRef}) => {
           <View style={styles.modalContentContainer}>
           
             
-            <Text style={styles.panelText}>BUZZED IN: LUIS</Text>
+            {mode != 0 &&
+            <View>
+                <Text style={styles.panelText}>BUZZED IN: LUIS</Text> {/* Buzzed in section title: needs to know order of buzzers from swift */}
 
-            <View style={styles.underline}></View>
+                <View style={styles.underline}></View>
+            </View>
+            }
 
             <View style={styles.moneyContainer}>
               <Text style={styles.money}>${amount}</Text>
@@ -92,7 +96,8 @@ const HostPanel = ({panelAmount, modalRef}) => {
                 <Text style={dailyDoubleOn ? styles.dailyTextOff: styles.dailyTextOn} >Daily Double</Text>
             </Pressable>
 
-            <View style={styles.cor_incContainer}>
+            {mode != 0 && 
+            <View style={styles.cor_incContainer}> {/* Correct/Incorrect Section for single buzz ins */}
               <Pressable onPress={()=>handleCorrect('Luis')} style={leftClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setLeftClicked(true)} onPressOut={()=>setLeftClicked(false)}>
                   <CheckSVG/>
               </Pressable>
@@ -101,6 +106,26 @@ const HostPanel = ({panelAmount, modalRef}) => {
                   <CrossSVG/>
               </Pressable>
             </View>
+            }
+
+            {mode == 0 &&
+            <View style={{alignItems:'center', marginTop:'4%'}}>
+              <Text style={{color: 'white', fontSize:20}}>BUZZED IN:</Text>
+              <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'space-evenly', marginVertical:'3%'}}>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  <BuzzIn contestant={'Luis'} amount={amount}/>
+              </View>
+              <Pressable onPress={()=> handleClose()}>
+                <Text style={{color: 'white', fontSize:30}}>Submit</Text>
+              </Pressable>
+            </View>
+            }
+
             
           </View>
         </BottomSheetModal>
@@ -122,7 +147,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
       height: Dimensions.get("screen").height * 0.15,/*padding encroached upon height so made 8.1 to fit Gs*/
       width:  Dimensions.get("screen").width * 0.70,
       borderRadius: Dimensions.get("screen").width * 0.05,
-      marginVertical: Dimensions.get("screen").height * 0.05,
+      marginVertical: '5%',
       textAlign:'center',
       justifyContent:'center'
     },

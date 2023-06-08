@@ -10,6 +10,8 @@ const { width, height } = Dimensions.get('window')
 const Contestant = ({contestant, currscore, type}) => {
     const [score, setScore] = useState(currscore)
     const [updating, setUpdating] = useState(false)
+    const [leftClicked, setLeftClicked] = useState(false)
+    const [rightClicked, setRightClicked] = useState(false)
     const dispatch = useDispatch()
 
     useEffect(()=> {
@@ -31,11 +33,11 @@ const Contestant = ({contestant, currscore, type}) => {
         <Text style={updating ? styles.scoreUpdating : styles.score}>${score}</Text>
         {updating && 
             <View style={styles.add_sub}>
-                <Pressable onPress={handleAdd}>
+                <Pressable onPress={handleAdd} style={leftClicked ? [styles.active,{borderBottomLeftRadius:15}] : {width:'49%', height: '100%', borderBottomLeftRadius:15, alignItems:'center', justifyContent:'center'}} onPressIn={()=>setLeftClicked(true)} onPressOut={()=> setLeftClicked(false)}>
                     <AddSvg/>
                 </Pressable>
                 <View style={{width:0,height:'100%',borderColor:'#6a41ff', borderWidth:1,}}></View> 
-                <Pressable onPress={handleSub}>
+                <Pressable onPress={handleSub} style={rightClicked ? [styles.active,{borderBottomRightRadius:15}] : {width:'49%', height: '100%', borderBottomRightRadius: 15, alignItems:'center', justifyContent:'center'}} onPressIn={()=>setRightClicked(true)} onPressOut={()=> setRightClicked(false)}>
                     <SubSvg/>
                 </Pressable>
             </View>
@@ -102,7 +104,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%',
         justifyContent: 'space-evenly',
-        alignItems:'center',
         borderColor: '#6a41ff',
         borderWidth: 2,
         borderLeftWidth:0,
@@ -113,5 +114,12 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         paddingTop: '4%'
+    },
+    active: {
+        backgroundColor: '#6a41ff',
+        width:'49%', 
+        height: '100%', 
+        alignItems:'center', 
+        justifyContent:'center'
     }
 })
