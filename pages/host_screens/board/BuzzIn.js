@@ -16,26 +16,24 @@ const BuzzIn = ({contestant, amount, checkAllMarked}) => {
         if (correct == 0) {
             setCorrect(1)
             dispatch(addScore({contestant:contestant, amount:2*amount}))
-            checkAllMarked(1)
         }
         else if (correct == 2) {
             setCorrect(1)
             dispatch(addScore({contestant:contestant, amount:amount}))
-            checkAllMarked(1)
         }
+        checkAllMarked(contestant)
     }
     const handleIncorrect = () => {
         // ReactNativeHapticFeedback.trigger("impactLight");
         if (correct == 1) {
             setCorrect(0)
             dispatch(subScore({contestant:contestant, amount: 2*amount}))
-            checkAllMarked(0)
         }
         else if (correct == 2) {
             setCorrect(0)
             dispatch(subScore({contestant:contestant, amount: amount}))
-            checkAllMarked(0)
         }
+        checkAllMarked(contestant)
     }
 
   return (

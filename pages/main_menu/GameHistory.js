@@ -58,9 +58,16 @@ const GameHistory = ({navigation}) => {
             </View>
           )}
         </View>
+        {(matchHistory.length>0) &&
         <Pressable onPress={() => dispatch(clearMatchHistory())}>
               <Text style={{fontSize:20, color:'white'}}>Clear Match History</Text>
+              <View></View>
         </Pressable>
+        }
+
+        {(matchHistory.length == 0) &&
+        <Text style={{color:'white', fontSize:20}}>All Finished Games will be stored here.</Text>
+        }
         
       </ScrollView>
     </View>

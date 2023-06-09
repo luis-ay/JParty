@@ -19,7 +19,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
     const mode = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
-    const [allMarked, setAllMarked] = useState(0)
+    const [allMarked, setAllMarked] = useState([])
 
     useEffect(()=> {
       setAmt(panelAmount)
@@ -31,6 +31,9 @@ const HostPanel = ({panelAmount, modalRef}) => {
     const handleSheetChanges = useCallback((index) => {
       console.log(`amount recieved by panel ${panelAmount} during ${index > 0? 'open': 'close'}`)
       console.log(`Daily double is ${dailyDoubleOn}`)
+      if (index == -1) {
+        setAllMarked([])
+      }
       // console.log('handleSheetChanges', index);
     }, []);
 
@@ -74,17 +77,17 @@ const HostPanel = ({panelAmount, modalRef}) => {
         }
     }
     
-    const checkAllMarked = (markedInt) => {
-      console.log(`checkallmarked called with markedint:${markedInt} and allmarked:${allMarked}`)
-      if (markedInt != 2) {
-        setAllMarked(allMarked + 1)
+    const checkAllMarked = (contestant) => {
+      console.log(`checkallmarked called with contestant:${contestant} and allmarked:${allMarked}`)
+      if (!allMarked.includes(contestant)) {
+        setAllMarked([...allMarked, contestant])
       }
     }
 
 
     const handleClose = () => {
-      console.log(`gamemode:${mode}, allMarked:${allMarked}, buzzedIn.length:${buzzedIn.length}`)
-      if ((mode == 0) && (allMarked != buzzedIn.length)) {
+      console.log(`gamemode:${mode}, allMarked:${allMarked.length}, buzzedIn.length:${buzzedIn.length}`)
+      if ((mode == 0) && (allMarked.length != buzzedIn.length)) {
         Alert.alert('Warning', 'Please mark all buzzed in contestants.', [
           {text: 'OK'},
         ]);
@@ -95,7 +98,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
           setDailyDouble(false)
           setAmt(amount/2)
         }
-        setAllMarked(0)
+        setAllMarked([])
       }
     }
 
