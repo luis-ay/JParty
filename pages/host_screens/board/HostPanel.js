@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Pressable, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable, Dimensions, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectDeductions, selectGameMode, subScore } from '../../../features/gameSlice'
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
@@ -14,9 +14,11 @@ const HostPanel = ({panelAmount, modalRef}) => {
     const [dailyDoubleOn, setDailyDouble] = useState(false)
     const [leftClicked, setLeftClicked] = useState(false)
     const [rightClicked, setRightClicked] = useState(false)
+    const [buzzedIn, setBuzzedIn] = useState(['Luis','Timmy','A'])
     const mode = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
+    const [allMarked, setAllMarked] = useState(0)
 
     useEffect(()=> {
       setAmt(panelAmount)
@@ -58,12 +60,29 @@ const HostPanel = ({panelAmount, modalRef}) => {
         dispatch(addScore({contestant:contestant, amount:amount}))
         handleClose()
     }
+    
+    const checkAllMarked = (markedInt) => {
+      console.log(`checkallmarked called with markedint:${markedInt} and allmarked:${allMarked}`)
+      if (markedInt != 2) {
+        setAllMarked(allMarked + 1)
+      }
+    }
+
 
     const handleClose = () => {
-      modalRef.current.close()
-      if (dailyDoubleOn) {
-        setDailyDouble(false)
-        setAmt(amount/2)
+      console.log(`gamemode:${mode}, allMarked:${allMarked}, buzzedIn.length:${buzzedIn.length}`)
+      if ((mode == 0) && (allMarked != buzzedIn.length)) {
+        Alert.alert('Warning', 'Please mark all buzzed in contestants.', [
+          {text: 'OK'},
+        ]);
+      }
+      else {
+        modalRef.current.close()
+        if (dailyDoubleOn) {
+          setDailyDouble(false)
+          setAmt(amount/2)
+        }
+        setAllMarked(0)
       }
     }
 
@@ -79,9 +98,9 @@ const HostPanel = ({panelAmount, modalRef}) => {
           <View style={styles.modalContentContainer}>
           
             
-            {mode != 0 &&
+            {(mode != 0) &&
             <View>
-                <Text style={styles.panelText}>BUZZED IN: LUIS</Text> {/* Buzzed in section title: needs to know order of buzzers from swift */}
+                <Text style={styles.panelText}>BUZZED IN: LUIS</Text> 
 
                 <View style={styles.underline}></View>
             </View>
@@ -96,8 +115,8 @@ const HostPanel = ({panelAmount, modalRef}) => {
                 <Text style={dailyDoubleOn ? styles.dailyTextOff: styles.dailyTextOn} >Daily Double</Text>
             </Pressable>
 
-            {mode != 0 && 
-            <View style={styles.cor_incContainer}> {/* Correct/Incorrect Section for single buzz ins */}
+            {(mode != 0) && 
+            <View style={styles.cor_incContainer}> 
               <Pressable onPress={()=>handleCorrect('Luis')} style={leftClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setLeftClicked(true)} onPressOut={()=>setLeftClicked(false)}>
                   <CheckSVG/>
               </Pressable>
@@ -108,17 +127,13 @@ const HostPanel = ({panelAmount, modalRef}) => {
             </View>
             }
 
-            {mode == 0 &&
+            {(mode == 0) &&
             <View style={{alignItems:'center', marginTop:'4%'}}>
               <Text style={{color: 'white', fontSize:20}}>BUZZED IN:</Text>
               <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'space-evenly', marginVertical:'3%'}}>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
-                  <BuzzIn contestant={'Luis'} amount={amount}/>
+                  {buzzedIn.map((contestant,idx)=>
+                    <BuzzIn key={idx} contestant={contestant} amount={amount} checkAllMarked={checkAllMarked}/>
+                  )}
               </View>
               <Pressable onPress={()=> handleClose()}>
                 <Text style={{color: 'white', fontSize:30}}>Submit</Text>

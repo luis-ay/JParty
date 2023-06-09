@@ -7,7 +7,7 @@ import CheckSvg from '../../../SVGS/SmallCheckSVG'
 import CrossSvg from '../../../SVGS/SmallCrossSVG'
 const { width, height } = Dimensions.get('window')
 
-const BuzzIn = ({contestant, amount}) => {
+const BuzzIn = ({contestant, amount, checkAllMarked}) => {
     const [correct, setCorrect] = useState(2) //using 0,1,2   0 incorrect, 1, correct, 2 not decided yet
     const dispatch = useDispatch()
 
@@ -16,10 +16,12 @@ const BuzzIn = ({contestant, amount}) => {
         if (correct == 0) {
             setCorrect(1)
             dispatch(addScore({contestant:contestant, amount:2*amount}))
+            checkAllMarked(1)
         }
         else if (correct == 2) {
             setCorrect(1)
             dispatch(addScore({contestant:contestant, amount:amount}))
+            checkAllMarked(1)
         }
     }
     const handleIncorrect = () => {
@@ -27,10 +29,12 @@ const BuzzIn = ({contestant, amount}) => {
         if (correct == 1) {
             setCorrect(0)
             dispatch(subScore({contestant:contestant, amount: 2*amount}))
+            checkAllMarked(0)
         }
         else if (correct == 2) {
             setCorrect(0)
             dispatch(subScore({contestant:contestant, amount: amount}))
+            checkAllMarked(0)
         }
     }
 

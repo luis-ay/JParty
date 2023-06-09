@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, Pressable, Keyboard, ImageBackground } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Keyboard, ImageBackground, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { Slider } from '@miblanchard/react-native-slider'
+import { TextInput,} from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
-import { addFinalAnswer, addWager, selectName } from '../../features/gameSlice'
+import { addFinalAnswer, selectName } from '../../features/gameSlice'
 import { useIsFocused } from '@react-navigation/native'
 
 
@@ -29,7 +28,9 @@ const FinalJParty = ({navigation}) => {
     
     const checkAnswerInput = () => {
         if (answer=='') {
-            alert('Please enter answer')
+            Alert.alert('Warning', 'Please enter response.', [
+                {text: 'OK'},
+              ]);
         }
         else {
             navigation.navigate('Waiting')
