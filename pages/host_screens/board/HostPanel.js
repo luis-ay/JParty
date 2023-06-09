@@ -15,6 +15,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
     const [leftClicked, setLeftClicked] = useState(false)
     const [rightClicked, setRightClicked] = useState(false)
     const [buzzedIn, setBuzzedIn] = useState(['Luis','Timmy','A'])
+    const [currentBuzzIdx, setCurrentBuzzIdx] = useState(0)
     const mode = useSelector(selectGameMode)
     const deductions = useSelector(selectDeductions)
     const dispatch = useDispatch()
@@ -52,6 +53,15 @@ const HostPanel = ({panelAmount, modalRef}) => {
             console.log(`${contestant} failed and got ${amount} points taken.`)
             dispatch(subScore({contestant:contestant, amount:amount}))
         }
+        if ((currentBuzzIdx != buzzedIn.length-1) && mode == 2) {
+          setCurrentBuzzIdx(currentBuzzIdx+1)
+        }
+        else if (mode == 2) {
+          handleClose()
+          setCurrentBuzzIdx(0)
+        } else if (mode == 1) {
+          //reset buzzers
+        }
     }
     const handleCorrect = (contestant) => { 
         /////////////////////////////////// LUIS IS HARDCODED FOR NOW ///////////////////////////////////////////////////////////
@@ -59,6 +69,9 @@ const HostPanel = ({panelAmount, modalRef}) => {
         console.log(`${contestant} scored and got ${amount} points added.`)
         dispatch(addScore({contestant:contestant, amount:amount}))
         handleClose()
+        if (mode==2) {
+          setCurrentBuzzIdx(0)
+        }
     }
     
     const checkAllMarked = (markedInt) => {
@@ -100,7 +113,7 @@ const HostPanel = ({panelAmount, modalRef}) => {
             
             {(mode != 0) &&
             <View>
-                <Text style={styles.panelText}>BUZZED IN: LUIS</Text> 
+                <Text style={styles.panelText}>BUZZED IN: {buzzedIn[currentBuzzIdx]}</Text> 
 
                 <View style={styles.underline}></View>
             </View>
@@ -117,11 +130,11 @@ const HostPanel = ({panelAmount, modalRef}) => {
 
             {(mode != 0) && 
             <View style={styles.cor_incContainer}> 
-              <Pressable onPress={()=>handleCorrect('Luis')} style={leftClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setLeftClicked(true)} onPressOut={()=>setLeftClicked(false)}>
+              <Pressable onPress={()=>handleCorrect(buzzedIn[currentBuzzIdx])} style={leftClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setLeftClicked(true)} onPressOut={()=>setLeftClicked(false)}>
                   <CheckSVG/>
               </Pressable>
               <View style={{width:0,height:'70%',borderColor:'#272B4A', borderWidth:2,}}></View>
-              <Pressable onPress={()=>handleIncorrect('Luis')} style={rightClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setRightClicked(true)} onPressOut={()=>setRightClicked(false)}>
+              <Pressable onPress={()=>handleIncorrect(buzzedIn[currentBuzzIdx])} style={rightClicked? styles.svgContainer:styles.svgContainerOff} onPressIn={()=>setRightClicked(true)} onPressOut={()=>setRightClicked(false)}>
                   <CrossSVG/>
               </Pressable>
             </View>
