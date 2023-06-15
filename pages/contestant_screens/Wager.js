@@ -1,10 +1,29 @@
-import { StyleSheet, Text, View, Pressable, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Keyboard, Dimensions, Platform, PixelRatio } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { Slider } from '@miblanchard/react-native-slider'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFinalAnswer, addWager, selectName } from '../../features/gameSlice'
 import { useIsFocused } from '@react-navigation/native'
+
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
 
 const Wager = ({navigation}) => {
     const name = useSelector(selectName)
@@ -29,9 +48,9 @@ const Wager = ({navigation}) => {
                 <Slider value={wager} onValueChange={setWager} maximumTrackTintColor='white' minimumTrackTintColor='#8e6ffc' maximumValue={limit} minimumValue={0} step={100} trackClickable={true} thumbStyle={styles.thumb} trackStyle={styles.track}/>
             </View>
         </View>
-        <Pressable onPress={()=> handleSubmit()}><Text style={{fontSize: 40, color: 'white', fontWeight: 800}}>Submit</Text></Pressable>
+        <Pressable onPress={()=> handleSubmit()}><Text style={{fontSize: normalize(40), color: 'white', fontWeight: 800}}>Submit</Text></Pressable>
         <Pressable onPress={() => navigation.navigate('Main')}>
-            <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+            <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Back</Text>
         </Pressable>
     </Pressable>
   )
@@ -47,7 +66,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     logo:{
-        fontSize:36,
+        fontSize:normalize(36),
         color:'white',
         marginVertical:'10%',
         fontWeight:'700',
@@ -58,12 +77,12 @@ const styles = StyleSheet.create({
     },
     title: {
         margin: '10%',
-        fontSize: 40,
+        fontSize: normalize(40),
         color: 'white',
         fontWeight: 800
     },
     score: {
-        fontSize: 48,
+        fontSize: normalize(48),
         color: 'white',
         fontWeight: 800,
         marginTop:'10%'

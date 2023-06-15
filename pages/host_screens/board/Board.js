@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Alert } from 'react-native'
-import { Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Alert, PixelRatio, Platform, Dimensions} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { selectAllScores, selectDeductions, selectGameMode, addGame , clearGame, selectSortedScores } from '../../../features/gameSlice'
@@ -10,6 +9,24 @@ import { BottomSheetModalProvider, BottomSheetModal } from '@gorhom/bottom-sheet
 import Contestant from './Contestant'
 import BackButtonSVG from '../../../SVGS/BackButtonSVG'
 
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
 
 const Board = ({navigation}) => {
 
@@ -143,7 +160,7 @@ export default Board
 const styles = StyleSheet.create({
     logo:{
         textAlign: 'center',
-        fontSize:55,
+        fontSize:normalize(55),
         color:'white',
         marginTop:Dimensions.get("screen").height * 0.03,
         marginBottom:Dimensions.get("screen").height * 0.03,
@@ -174,16 +191,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     scoreText: {
-        color:'white',
+        color:'#cccccc',
         textAlign:'center',
-        fontSize: 32,
+        fontSize: normalize(24),
     },    
     endGameText: {
         
         color:'white',
         textAlign:'right',
         marginRight: Dimensions.get("screen").width * 0.04,
-        fontSize: 25,
+        fontSize: normalize(25),
     },
     backAndEndContainer:{
         flexDirection:'row-reverse',
@@ -228,17 +245,17 @@ const styles = StyleSheet.create({
     },
     doubleJeopardyOnTextColor: {
         color:'#FFD700',
-        fontSize: 22,
+        fontSize: normalize(22),
         marginVertical: '2%'
     },
     doubleJeopardyOffTextColor: {
         color:'white',
-        fontSize: 22,
+        fontSize: normalize(22),
         marginVertical: '2%'
     },
     finalJeopardyTextColor: {
         color: 'white',
-        fontSize: 22,
+        fontSize: normalize(22),
         marginVertical: '2%'
     },
     DoubleJeopardyUnderline: {

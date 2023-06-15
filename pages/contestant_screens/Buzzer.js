@@ -1,10 +1,29 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, Platform, PixelRatio } from 'react-native'
 import { useState } from 'react'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectName } from '../../features/gameSlice'
 import { TextInput } from 'react-native-gesture-handler'
 import { changeName } from '../../features/gameSlice'
+
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
 
 const Buzzer = ({navigation}) => {
     const storedName = useSelector(selectName)
@@ -33,13 +52,13 @@ const Buzzer = ({navigation}) => {
                 <TextInput style={styles.answer} fontWeight='bold' placeholder={name} value={name} onChangeText={setName} onSubmitEditing={handleNameChange} placeholderTextColor={'#b8b3c9'} maxLength={30} returnKeyType="done"></TextInput>
                 <Text style={styles.score}>{4000}</Text>
             </View>
-            <Text style={{color:'white', fontSize: 20}}>{ready ? 'Click anywhere to buzz in.': 'Wait for host.'}</Text>
+            <Text style={{color:'white', fontSize: normalize(20)}}>{ready ? 'Click anywhere to buzz in.': 'Wait for host.'}</Text>
             <Pressable onPress={()=>setReady(!ready)}><Text>Click Ready/Unready</Text></Pressable>
             <Pressable onPress={() => navigation.navigate('Main')}>
-                <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+                <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Back</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate('Wager')}>
-                <Text style={{fontSize:36, color:'white', top:'50%'}}>FinalJParty</Text>
+                <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>FinalJParty</Text>
             </Pressable>
         </View>
     </Pressable>
@@ -63,7 +82,7 @@ const styles = StyleSheet.create({
     },
     score: {
         marginTop:'20%',
-        fontSize: 48,
+        fontSize: normalize(48),
         color: 'white',
         fontWeight: 800
     },
@@ -71,7 +90,7 @@ const styles = StyleSheet.create({
         marginTop: '20%',
         width: '70%',
         height: '15%',
-        fontSize: 60,
+        fontSize: normalize(60),
         color: 'white',
     },
     scoreContainer: {

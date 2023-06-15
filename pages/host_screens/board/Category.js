@@ -1,5 +1,24 @@
-import { StyleSheet, Text, Pressable} from 'react-native'
+import { StyleSheet, Text, Pressable, Dimensions, Platform, PixelRatio} from 'react-native'
 import React from 'react'
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const Category = ({value, answerCount, panelAmountCall, modalOpenRef}) => {
 
@@ -39,7 +58,7 @@ const styles = StyleSheet.create({
     },
     activeText: {
       color: 'white',
-      fontSize: 34,
+      fontSize: normalize(34),
       fontWeight: 700,
       shadowOffset : {width: 3, height: 3},
       shadowColor: 'black',
@@ -48,7 +67,7 @@ const styles = StyleSheet.create({
     },
     inactiveText: {
       color: '#aeb1c2',
-      fontSize: 34,
+      fontSize: normalize(34),
       fontWeight: 700,
       shadowOffset : {width: 3, height: 3},
       shadowColor: 'black',

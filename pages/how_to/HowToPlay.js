@@ -1,8 +1,29 @@
-import { StyleSheet, Text, View, Pressable, Dimensions, ScrollView, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, ScrollView, useWindowDimensions,PixelRatio, Platform } from 'react-native'
 import React from 'react'
 import QuizSVG from "./QuizSVG"
 import WifiSVG from "./WifiSVG"
 import BackButtonSVG from '../../SVGS/BackButtonSVG'
+const fontScale = PixelRatio.getFontScale();
+const getFontSize = size => size / fontScale;
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const { width, height } = Dimensions.get('window')
 const HowToPlay = ({navigation}) => {
@@ -51,7 +72,7 @@ const HowToPlay = ({navigation}) => {
 
           <Text style={styles.sectionTitle}>DEDUCTIONS<Text style={styles.logoColor}>!</Text></Text>
           <View style={styles.underline}></View>
-          <Text style={styles.sectionInfo}>By disabling deductions, players can enjoy the game without the stressor of losing points for incorrect answers.</Text>
+          <Text style={styles.sectionInfo}>By disabling deductions, players can enjoy the game without the stress of losing points for incorrect answers.</Text>
 
         </ScrollView>
     </View>
@@ -74,14 +95,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   noticeInfo:{
-    fontSize:18,
+    fontSize:normalize(20),
     color:'white',
     width: '85%',
   },
   noticeTitle:{
     marginVertical:'4%',
     textAlign: "center",
-    fontSize: 40,
+    fontSize: normalize(40),
     color:'white',
   },
   noticeUnderline: {
@@ -95,7 +116,7 @@ const styles = StyleSheet.create({
     marginTop: '15%'
   },
   logo:{
-    fontSize:40,
+    fontSize:normalize(40),
     color:'white',
     fontWeight:'700',
     textAlign: 'center',
@@ -106,13 +127,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle:{
     justifyContent: 'center',
-    fontSize:40,
+    fontSize:normalize(45),
     color:'white',
     left: Dimensions.get("screen").height * 0.01,
     fontWeight:'700',
   },
   sectionInfo:{
-    fontSize:18,
+    fontSize:normalize(20),
     justifyContent: 'center',
     marginLeft:   Dimensions.get("screen").width * 0.1,
     marginRight:  Dimensions.get("screen").width * 0.05,

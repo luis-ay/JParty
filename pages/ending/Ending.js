@@ -1,10 +1,29 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, Platform, PixelRatio} from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addGame, clearGame, selectAllScores, selectMatchHistory, selectSortedScores } from '../../features/gameSlice'
 import { useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native'
+
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
 
 const Ending = ({navigation}) => {
     const storedScores = useSelector(selectAllScores)
@@ -30,7 +49,7 @@ const Ending = ({navigation}) => {
         <Text style={styles.logo}>Final<Text style={styles.logoColor}>J!</Text>Party</Text>
 
         <View>
-            <Text style={{color: 'white', fontSize:30}}>FINAL SCORES</Text>
+            <Text style={{color: 'white', fontSize:normalize(30)}}>FINAL SCORES</Text>
             <View style={{borderColor:'#6A41FF', borderBottomWidth: 1, marginBottom:'5%'}}></View>
         </View>
 
@@ -44,7 +63,7 @@ const Ending = ({navigation}) => {
         </View>
         <Text style={styles.thanks}>THANKS FOR PLAYING J!PARTY!!</Text>
         <Pressable onPress={() => handleGameEnd()}>
-            <Text style={{fontSize:32, color:'white'}}>Main Menu</Text>
+            <Text style={{fontSize:normalize(32), color:'white'}}>Main Menu</Text>
             <View style={{borderColor:'#6A41FF', borderBottomWidth: 1}}></View>
         </Pressable>
     </View>
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo:{
-        fontSize:46,
+        fontSize:normalize(46),
         color:'white',
         marginTop:'20%',
         fontWeight:'700',
@@ -72,22 +91,22 @@ const styles = StyleSheet.create({
     },
     firstPlace: {
         color:'#FFD700',
-        fontSize: 62,
+        fontSize: normalize(62),
         marginBottom: '2%'
     },
     secondPlace: {
         color: 'white',
-        fontSize: 42,
+        fontSize: normalize(42),
         marginBottom: '2%'
     },
     thirdPlace: {
         color: 'white',
-        fontSize: 30,
+        fontSize: normalize(30),
         marginBottom: '1%'
     },
     thanks: {
         color: 'white',
-        fontSize: 16,
+        fontSize: normalize(16),
         marginVertical: '15%'
     }
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Dimensions, Platform, PixelRatio } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -7,6 +7,25 @@ import { useEffect } from 'react'
 import ContestantScore from './ContestantScore'
 import { useIsFocused } from '@react-navigation/native'
 import Answer from './Answer'
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const { width, height } = Dimensions.get('window')
 const FinalJPartyControl = ({navigation}) => {
@@ -47,8 +66,8 @@ const FinalJPartyControl = ({navigation}) => {
           <View style={styles.wagersContainer}>
             {Object.entries(wagers).map(entry => 
               <View key={entry[0]} style={{alignItems:'center', margin:'3%'}}>
-                <Text style={{color: 'white', fontSize: 36, marginHorizontal:'10%', marginVertical:'5%'}}>{entry[0]}</Text>
-                <Text style={{color:'#FFD700', fontSize:42}}>${entry[1]}</Text>
+                <Text style={{color: 'white', fontSize: normalize(36), marginHorizontal:'10%', marginVertical:'5%'}}>{entry[0]}</Text>
+                <Text style={{color:'#FFD700', fontSize:normalize(42)}}>${entry[1]}</Text>
               </View>)}
           </View>
         </View>
@@ -66,11 +85,11 @@ const FinalJPartyControl = ({navigation}) => {
         </View>}
 
         <Pressable onPress={() => navigation.navigate('Ending')}>
-              <Text style={{fontSize:36, color:'white', top:'50%'}}>Submit</Text>
+              <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Submit</Text>
         </Pressable>
 
         <Pressable onPress={() => navigation.navigate('Main')}>
-              <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+              <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Back</Text>
         </Pressable>
 
       </ScrollView>

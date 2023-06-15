@@ -5,6 +5,6 @@ export default function SubSvg(){ const svgMarkup =`<?xml version="1.0" encoding
     <path d="M288 864v192h1344V864z" fill-rule="evenodd"/>
 </svg>`
 const SvgImage = () => <SvgXml xml={svgMarkup}
-height = {20} width={20}/>; 
+height = {25} width={25}/>; 
  
 return <SvgImage />;}

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Pressable, Dimensions, Alert } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable, Alert, Platform, Dimensions, PixelRatio } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectDeductions, selectGameMode, subScore } from '../../../features/gameSlice'
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
@@ -8,6 +8,24 @@ import CheckSVG from "../../../SVGS/CheckSVG"
 import CrossSVG from "../../../SVGS/CrossSVG"
 import BuzzIn from './BuzzIn'
 
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const HostPanel = ({panelAmount, modalRef}) => {
     const [amount, setAmt] = useState(panelAmount)
@@ -145,14 +163,14 @@ const HostPanel = ({panelAmount, modalRef}) => {
 
             {(mode == 0) &&
             <View style={{alignItems:'center', marginTop:'4%'}}>
-              <Text style={{color: 'white', fontSize:20}}>BUZZED IN:</Text>
+              <Text style={{color: 'white', fontSize:normalize(20)}}>BUZZED IN:</Text>
               <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'space-evenly', marginVertical:'3%'}}>
                   {buzzedIn.map((contestant,idx)=>
                     <BuzzIn key={idx} contestant={contestant} amount={amount} checkAllMarked={checkAllMarked}/>
                   )}
               </View>
               <Pressable onPress={()=> handleClose()}>
-                <Text style={{color: 'white', fontSize:30}}>Submit</Text>
+                <Text style={{color: 'white', fontSize:normalize(30)}}>Submit</Text>
               </Pressable>
             </View>
             }
@@ -184,14 +202,14 @@ const HostPanel = ({panelAmount, modalRef}) => {
     },
     money:{
       textAlign:'center',
-      fontSize:60,
+      fontSize:normalize(60),
       color:'white',
       //marginVertical:'10%',
       fontWeight:'700'
       
     },
     panelText:{
-      fontSize:40,
+      fontSize:normalize(40),
       color:'white',
       marginVertical:'5%',
       fontWeight:'700'
@@ -219,11 +237,11 @@ const HostPanel = ({panelAmount, modalRef}) => {
       justifyContent:'center'
     },
     dailyTextOn:{
-      fontSize:36,
+      fontSize:normalize(36),
       color:'#FFD700'
     },
     dailyTextOff:{
-      fontSize:36,
+      fontSize:normalize(36),
       color:'white'
     },
     underline: {

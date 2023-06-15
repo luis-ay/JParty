@@ -1,10 +1,28 @@
-import { StyleSheet, Text, View, Pressable, Keyboard, ImageBackground, Alert } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Keyboard, ImageBackground, Alert, Dimensions, Platform, PixelRatio } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TextInput,} from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFinalAnswer, selectName } from '../../features/gameSlice'
 import { useIsFocused } from '@react-navigation/native'
 
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
 
 const FinalJParty = ({navigation}) => {
 
@@ -47,9 +65,9 @@ const FinalJParty = ({navigation}) => {
                 <Text style={styles.title}>Enter Answer:</Text>
                 <TextInput style={styles.answer} readOnly={submitted} onChangeText={setAnswer} placeholder='What is deez' placeholderTextColor={'#b8b3c9'} maxLength={30} returnKeyType="done"></TextInput>
             </View>
-            <Pressable onPress={()=> handleSubmit()}><Text style={{fontSize: 40, color: 'white', fontWeight: 800}}>Submit</Text></Pressable>
+            <Pressable onPress={()=> handleSubmit()}><Text style={{fontSize: normalize(40), color: 'white', fontWeight: 800}}>Submit</Text></Pressable>
             <Pressable onPress={() => navigation.navigate('Main')}>
-                <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+                <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Back</Text>
             </Pressable>
         </Pressable>
     </ImageBackground>
@@ -70,7 +88,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     logo:{
-        fontSize:36,
+        fontSize:normalize(36),
         color:'white',
         marginVertical:'10%',
         fontWeight:'700',
@@ -81,12 +99,12 @@ const styles = StyleSheet.create({
     },
     title: {
         margin: '10%',
-        fontSize: 40,
+        fontSize: normalize(40),
         color: 'white',
         fontWeight: 800
     },
     score: {
-        fontSize: 48,
+        fontSize: normalize(48),
         color: 'white',
         fontWeight: 800,
         marginTop:'10%'
@@ -98,7 +116,7 @@ const styles = StyleSheet.create({
         height: '15%',
         borderRadius: 25,
         padding: 15,
-        fontSize: 20,
+        fontSize: normalize(20),
     },
     track: {
         borderRadius: 25,

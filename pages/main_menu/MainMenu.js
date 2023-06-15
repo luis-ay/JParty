@@ -1,10 +1,28 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Pressable, PixelRatio, Dimensions, Platform } from 'react-native'
 import React from 'react'
 import { addContestant, changeDate, makeHost } from '../../features/gameSlice'
 import { useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { clearGame } from '../../features/gameSlice'
 
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const MainMenu = ({navigation}) => {
   
@@ -82,7 +100,7 @@ export default MainMenu
 
 const styles = StyleSheet.create({
   logo:{
-    fontSize:60,
+    fontSize:normalize(60),
     color:'white',
     marginTop:'22%',
     marginBottom: '16%',
@@ -95,18 +113,19 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: '#16182A',
     width: '100%',
-    height: '100%',
+    minHeight: '100%',
     alignItems: 'center',
   },
   container: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    width: '100%'
+    width: '100%',
+    height:'60%',
   },
   menuButtonText: {
     textAlign: 'center',
     letterSpacing: 1.96,
-    fontSize: 14,
+    fontSize: normalize(14),
     fontWeight: 400,
     color: '#ffffff',
   },

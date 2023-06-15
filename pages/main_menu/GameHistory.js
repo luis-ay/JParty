@@ -1,9 +1,28 @@
-import { StyleSheet, Text, ScrollView, Pressable, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, ScrollView, Pressable, View, Dimensions, Platform, PixelRatio } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearMatchHistory, selectMatchHistory } from '../../features/gameSlice'
 import { useIsFocused } from '@react-navigation/native'
 import BackButtonSVG from '../../SVGS/BackButtonSVG'
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const { width, height } = Dimensions.get('window')
 
@@ -60,13 +79,13 @@ const GameHistory = ({navigation}) => {
         </View>
         {(matchHistory.length>0) &&
         <Pressable onPress={() => dispatch(clearMatchHistory())}>
-              <Text style={{fontSize:20, color:'white'}}>Clear Match History</Text>
+              <Text style={{fontSize:normalize(20), color:'white'}}>Clear Match History</Text>
               <View></View>
         </Pressable>
         }
 
         {(matchHistory.length == 0) &&
-        <Text style={{color:'white', fontSize:20}}>All Finished Games will be stored here.</Text>
+        <Text style={{color:'white', fontSize:normalize(20)}}>All Finished Games will be stored here.</Text>
         }
         
       </ScrollView>
@@ -95,7 +114,7 @@ const styles = StyleSheet.create({
     marginTop: '15%'
   },
   logo:{
-    fontSize:36,
+    fontSize:normalize(36),
     color:'white',
     fontWeight:'700',
     marginBottom: height * 0.05
@@ -115,17 +134,17 @@ const styles = StyleSheet.create({
   },
   date: {
     color: 'white',
-    fontSize: 22,
+    fontSize: normalize(22),
     marginVertical: height * 0.01
   },
   firstplaceScore: {
     color:'#FFD700',
-    fontSize: 22,
+    fontSize: normalize(22),
     paddingVertical: '1%'
   },
   score: {
     color: 'white',
-    fontSize: 18,
+    fontSize: normalize(18),
     paddingVertical: '1%'
   }
 })

@@ -1,7 +1,26 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions, Platform, PixelRatio } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
+
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
 
 const Waiting = ({navigation}) => {
     const [answerReady, setAnswerReady] = useState(false)
@@ -29,15 +48,15 @@ const Waiting = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Final<Text style={styles.logoColor}>J!</Text>Party</Text>
-      <Text style={{fontSize:36, color:'white'}}>WAITING FOR HOST...</Text>
+      <Text style={{fontSize:normalize(36), color:'white'}}>WAITING FOR HOST...</Text>
       <Pressable onPress={() => handleAnswerReady()}>
-            <Text style={{fontSize:36, color:'white', top:'50%'}}>Go to Answer</Text>
+            <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Go to Answer</Text>
     </Pressable>
       <Pressable onPress={() => handleEndReady()}>
-            <Text style={{fontSize:36, color:'white', top:'50%'}}>Go to End</Text>
+            <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Go to End</Text>
     </Pressable>
       <Pressable onPress={() => navigation.navigate('Main')}>
-            <Text style={{fontSize:36, color:'white', top:'50%'}}>Back</Text>
+            <Text style={{fontSize:normalize(36), color:'white', top:'50%'}}>Back</Text>
     </Pressable>
     </View>
   )
@@ -53,7 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     logo:{
-        fontSize:36,
+        fontSize:normalize(36),
         color:'white',
         marginVertical:'10%',
         fontWeight:'700',

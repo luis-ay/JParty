@@ -1,10 +1,30 @@
-import { StyleSheet, Text, View, Dimensions, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, Pressable, Platform, PixelRatio } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addScore, subScore } from '../../../features/gameSlice'
 import CheckSvg from '../../../SVGS/SmallCheckSVG'
 import CrossSvg from '../../../SVGS/SmallCrossSVG'
+
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  } = Dimensions.get('window');
+  
+  // based on iphone 5s's scale
+  const scale = SCREEN_WIDTH / 428;
+  
+  export function normalize(size) {
+    const newSize = size * scale 
+    console.log(scale) 
+    console.log(newSize) 
+    if (Platform.OS === 'ios') {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
+  }
+
 const { width, height } = Dimensions.get('window')
 
 const BuzzIn = ({contestant, amount, checkAllMarked}) => {
@@ -38,7 +58,7 @@ const BuzzIn = ({contestant, amount, checkAllMarked}) => {
 
   return (
     <View style={styles.container}>
-        <Text style={{color: 'white', textAlign:'center', width:'40%', fontSize:24}}>{contestant}</Text>
+        <Text style={{color: 'white', textAlign:'center', width:'40%', fontSize:normalize(24)}}>{contestant}</Text>
         <View style={{flexDirection:'row',width: '40%',height:'100%', justifyContent: 'flex-end', alignItems: 'center'}}>
             <View style={{width:0,height:'80%',borderColor:'#272B4A', borderWidth:2, borderRadius:10}}></View>
             <Pressable style={correct==1 ? styles.active: styles.inactive} onPress={()=>handleCorrect()}>

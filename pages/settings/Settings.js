@@ -1,10 +1,28 @@
-import { StyleSheet, Text, View, SafeAreaView, Switch, Pressable } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Switch, Pressable, PixelRatio, Platform, Dimensions} from 'react-native'
 import React,{useEffect, useState} from 'react'
 import { changeGameMode, changeDeductions, selectGameMode, selectDeductions } from '../../features/gameSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import BackButtonSVG from '../../SVGS/BackButtonSVG'
 
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 428;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  console.log(scale) 
+  console.log(newSize) 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const Settings = ({navigation}) => {
   // Need to set component state to whats persisted in the store, need to use selectors
@@ -113,7 +131,7 @@ export default Settings
 
 const styles = StyleSheet.create({
   logo:{
-    fontSize:50,
+    fontSize:normalize(50),
     color:'white',
     fontWeight:'700'
   },
@@ -122,7 +140,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'none',
   },
   optionTitle: {
-    fontSize:36,
+    fontSize:normalize(36),
     color:'white',
     fontWeight:'700',
   },
@@ -151,7 +169,7 @@ const styles = StyleSheet.create({
   },
   underline: {
     width: '95%',
-    bottom:'5.5%',
+    bottom:'8%',
     height: 1,
     borderBottomWidth: 2,
     borderBottomColor: '#6A41FF',
